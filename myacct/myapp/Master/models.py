@@ -3,7 +3,7 @@ from django.utils import timezone
 
 # Create your models here.
 class Classification(models.Model):
-    ClassificationCode = models.CharField(max_length=2)
+    ClassificationCode = models.CharField(max_length=2, primary_key=True)
     ClassificationName = models.TextField(default='')
     CreateDate = models.DateTimeField(default=timezone.now)
     CreateUser = models.ForeignKey('auth.User', on_delete=models.DO_NOTHING, related_name='CreateUser')
