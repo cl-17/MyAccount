@@ -1,0 +1,12 @@
+<html>
+  <body>
+    <p>マスタメンテナンスメンテナンス</p>
+    {# この辺はテンプレートでBlock化したい #}
+    <p>分類コード：{{ model.ClassificationCode }}</p>
+    <p>分類名：{{ model.ClassificationName }}</p>
+    <p>登録ユーザ：{{ model.CreateUser }}</p>
+    <p>更新ユーザ：{{ model.UpdateUser }}</p>
+    <a href="/master/{{ master_type }}">戻る</a>
+    {# primary_keyの値で戻る先を変更したい #}
+  </body>
+</html>

@@ -1,0 +1,14 @@
+{% extends 'master_list.html' %}
+
+{% block sss %}
+
+  {% for test in tests %}
+    <div class="test">
+      <div class="name">
+        {{ tests.test }}
+      </div>
+      <h1><a href="">{{ test.ClassificationName }}</a></h1>
+    </div>
+  {% endfor %}
+
+{% endblock %}

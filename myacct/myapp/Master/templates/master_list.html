@@ -1,0 +1,15 @@
+{% load static %}
+<html>
+  <body>
+    <p>マスタ一覧</p>
+    {# この辺はテンプレートでBlock化したい #}
+    {% for model in models %}
+    <div class="model">■
+        <a href="/master/{{ master_type }}/maintenance/{{ model.ClassificationCode }}">{{ model.ClassificationCode }}:{{ model.ClassificationName }}</a>
+        {# hrefの中身がいけてないなぁ #}
+    </div>
+    {% endfor %}
+    <p></p>
+    <a href="/master/{{ master_type }}">戻る</a>
+  </body>
+</html>
