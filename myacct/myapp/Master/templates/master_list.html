@@ -2,14 +2,20 @@
 <html>
   <body>
     <p>マスタ一覧</p>
-    {# この辺はテンプレートでBlock化したい #}
+    {# この辺はテンプレートでBlock化したいかも #}
     {% for model in models %}
-    <div class="model">■
+      <div class="model">■
+      {# hrefの中身がいけてないなぁ #}
+      {% if master_type == 'classification' %}
         <a href="/master/{{ master_type }}/maintenance/{{ model.ClassificationCode }}">{{ model.ClassificationCode }}:{{ model.ClassificationName }}</a>
-        {# hrefの中身がいけてないなぁ #}
-    </div>
+      {% elif master_type == 'purpose' %}
+        <a href="/master/{{ master_type }}/maintenance/{{ model.PurposeCode }}">{{ model.PurposeCode }}:{{ model.PurposeName }}</a>
+      {% endif %}
+      </div>
     {% endfor %}
     <p></p>
     <a href="/master/{{ master_type }}">戻る</a>
   </body>
 </html>
+
+

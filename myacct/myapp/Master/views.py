@@ -2,7 +2,7 @@ import django_filters
 from django.shortcuts import render
 from django.contrib.auth.models import User
 from rest_framework import viewsets, filters
-from .models import Classification
+from .models import Classification,Purpose
 from .serializer import ClassificationSerializer,UserSerializer
 
 # Create your views here.
@@ -22,7 +22,10 @@ def master_action(request, master_type):
 
 def master_list(request, master_type):
 
-    models = Classification.objects.all
+    if master_type == 'classification':
+        models = Classification.objects.all
+    elif master_type == 'purpose':
+        models = Purpose.objects.all
 
     dict = {
         'models': models,
@@ -34,10 +37,17 @@ def master_list(request, master_type):
 
 def master_maintenance(request, master_type, primary_key=''):
 
-    if primary_key != '':
-        model = Classification.objects.get(ClassificationCode=primary_key)
-    else:
-        model = Classification
+    if master_type == 'classification':
+        if primary_key != '':
+            model = Classification.objects.get(ClassificationCode=primary_key)
+        else:
+            model = Classification
+
+    elif master_type == 'purpose':
+        if primary_key != '':
+            model = Purpose.objects.get(PurposeCode=primary_key)
+        else:
+            model = Purpose
 
     dict = {
         'master_type': master_type,

@@ -1,12 +1,26 @@
 <html>
   <body>
     <p>マスタメンテナンスメンテナンス</p>
-    {# この辺はテンプレートでBlock化したい #}
-    <p>分類コード：{{ model.ClassificationCode }}</p>
-    <p>分類名：{{ model.ClassificationName }}</p>
-    <p>登録ユーザ：{{ model.CreateUser }}</p>
-    <p>更新ユーザ：{{ model.UpdateUser }}</p>
-    <a href="/master/{{ master_type }}">戻る</a>
-    {# primary_keyの値で戻る先を変更したい #}
+    {# この辺はテンプレートでBlock化したいかも #}
+    
+    {% if master_type == 'classification' %}
+      <p>分類コード：{{ model.ClassificationCode }}</p>
+      <p>分類名：{{ model.ClassificationName }}</p>
+      <p>登録ユーザ：{{ model.CreateUser }}</p>
+      <p>更新ユーザ：{{ model.UpdateUser }}</p>
+    {% elif master_type == 'purpose' %}
+      <p>用途コード：{{ model.PurposeCode }}</p>
+      <p>用途名：{{ model.PurposeName }}</p>
+      <p>登録ユーザ：{{ model.CreateUser }}</p>
+      <p>更新ユーザ：{{ model.UpdateUser }}</p>
+    {% endif %}
+
+    {% if primary_key == '' %}
+      <a href="/master/{{ master_type }}">戻る</a>
+    {% else %}
+      <a href="/master/{{ master_type }}/list">戻る</a>
+    {% endif %}
+    
   </body>
 </html>
+
