@@ -2,10 +2,11 @@ from django.urls import path, include
 from rest_framework import routers
 
 from Master import views
-from Master.views import ClassificationViewSet
+from Master.views import ClassificationViewSet, PurposeViewSet
 
 router= routers.DefaultRouter()
 router.register('classification', ClassificationViewSet)
+router.register('purpose', PurposeViewSet)
 
 urlpatterns = [
     path('', views.master_main, name='main_master'),

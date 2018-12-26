@@ -1,12 +1,26 @@
-<html>
-  <body>
-    {% if master_type == 'classification' %}
-      <p>分類マスタ：{{ master_type }}</p>
-    {% elif master_type == 'purpose' %}
-      <p>用途マスタ：{{ master_type }}</p>
-    {% endif %}
-    <a href="/master/{{ master_type }}/list">一覧を確認する</a>
-    <a href="/master/{{ master_type }}/maintenance">登録する</a>
-    <a href="{% url 'main_master' %}">戻る</a>
-  </body>
-</html>
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+
+{% block header %}
+
+  <title>{{ title }}</title>
+  <h1>■{{ title }}</h1>
+
+{% endblock header %}
+
+
+{% block detail %}
+
+  <p>　・<a href="/master/{{ master_type }}/list">一覧を確認する</a></p>
+  <p>　・<a href="/master/{{ master_type }}/maintenance">登録する</a></p>
+
+{% endblock detail %}
+
+
+{% block return %}
+
+  <br>
+  <p>　<a href="{% url 'main_master' %}">戻る</a></p>
+
+{% endblock return %}

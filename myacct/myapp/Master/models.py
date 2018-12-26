@@ -4,76 +4,81 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 class Classification(models.Model):
-    ClassificationCode = models.CharField(
+    c_id = models.CharField(
         max_length=2,
         primary_key=True,
     )
 
-    ClassificationName = models.TextField(
+    c_name = models.TextField(
         default='',
     )
 
-    CreateDate = models.DateTimeField(
+    c_create_user = models.ForeignKey(
+        User, 
+        on_delete=models.DO_NOTHING,
+        related_name='c_create_user',
+    )
+
+    c_create_date = models.DateTimeField(
         default=timezone.now,
     )
 
-    CreateUser = models.ForeignKey(
-        User, 
+    c_update_user = models.ForeignKey(
+        User,
         on_delete=models.DO_NOTHING,
-        related_name='C_CreateUser',
-    )
-    
-    UpdateDate = models.DateTimeField(
-        default=timezone.now
+        related_name='c_update_user',
     )
 
-    UpdateUser = models.ForeignKey(
-        User, 
-        on_delete=models.DO_NOTHING, 
-        related_name='C_UpdateUser'
+    c_update_date = models.DateTimeField(
+        default=timezone.now,
     )
 
     def __str__(self):
-        return self.ClassificationName
+        return self.c_name
 
 
 class Purpose(models.Model):
-    PurposeCode = models.CharField(
-        max_length=4, 
+    p_id = models.CharField(
+        max_length=4,
         primary_key=True,
     )
 
-    PurposeName = models.TextField(
+    p_name = models.TextField(
         default='',
     )
 
-    ClassificationCode = models.ForeignKey(
-        Classification, 
+    c_id = models.ForeignKey(
+        Classification,
         on_delete=models.DO_NOTHING,
     )
 
-    CreateDate = models.DateTimeField(
-        default=timezone.now,
+    p_sub_id = models.CharField(
+        max_length=2,
+        null=False,
     )
 
-    CreateUser = models.ForeignKey(
-        User, 
+    p_create_user = models.ForeignKey(
+        User,
         on_delete=models.DO_NOTHING,
-        related_name='P_CreateUser',
+        related_name='p_create_user',
     )
 
-    UpdateDate = models.DateTimeField(
+    p_create_date = models.DateTimeField(
         default=timezone.now,
     )
 
-    UpdateUser = models.ForeignKey(
-        User, 
-        on_delete=models.DO_NOTHING, 
-        related_name='P_UpdateUser',
+    p_update_user = models.ForeignKey(
+        User,
+        on_delete=models.DO_NOTHING,
+        related_name='p_update_user',
+    )
+
+    p_update_date = models.DateTimeField(
+        default=timezone.now,
     )
 
     moldel_c = Classification()
 
     def __str__(self):
-        return self.PurposeName
+        return self.p_name
 

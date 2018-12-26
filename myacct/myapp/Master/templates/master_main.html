@@ -1,11 +1,19 @@
-<html>
-  <body>
-    <p>マスタメンテナンス</p>
-    {# マスタのリストを作成すれば動的にできるか #}
-    <a href="/master/classification">■分類マスタ</a>
-    <a href="/master/purpose">■用途マスタ</a>
-    <p>■その他</p>
-    {# 今後追加予定 #}
-  </body>
-</html>
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+
+{% block header %}
+
+  <title>{{ title }}</title>
+  <h1>■{{ title }}</h1>
+
+{% endblock header %}
+
+
+{% block detail %}
+
+  <p>　・<a href="/master/classification">分類マスタ</a></p>
+  <p>　・<a href="/master/purpose">用途マスタ</a></p>
+
+{% endblock detail %}
 

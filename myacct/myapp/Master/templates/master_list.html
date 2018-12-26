@@ -1,21 +1,31 @@
-{% load static %}
-<html>
-  <body>
-    <p>マスタ一覧</p>
-    {# この辺はテンプレートでBlock化したいかも #}
-    {% for model in models %}
-      <div class="model">■
-      {# hrefの中身がいけてないなぁ #}
-      {% if master_type == 'classification' %}
-        <a href="/master/{{ master_type }}/maintenance/{{ model.ClassificationCode }}">{{ model.ClassificationCode }}:{{ model.ClassificationName }}</a>
-      {% elif master_type == 'purpose' %}
-        <a href="/master/{{ master_type }}/maintenance/{{ model.PurposeCode }}">{{ model.PurposeCode }}:{{ model.PurposeName }}</a>
-      {% endif %}
-      </div>
-    {% endfor %}
-    <p></p>
-    <a href="/master/{{ master_type }}">戻る</a>
-  </body>
-</html>
+{% extends 'base.html' %}
+{% load staticfiles %}
 
 
+{% block header %}
+
+  <title>{{ title }}</title>
+  <h1>■{{ title }}</h1>
+
+{% endblock header %}
+
+
+{% block detail %}
+
+  {% for model in models %}
+    {% if master_type == 'classification' %}
+      <p>　・<a href="/master/{{ master_type }}/maintenance/{{ model.c_id }}">{{ model.c_id }}：{{ model.c_name }}</a></p>
+    {% elif master_type == 'purpose' %}
+      <p>　・<a href="/master/{{ master_type }}/maintenance/{{ model.p_id }}">{{ model.p_id }}：{{ model.p_name }}</a></p>
+    {% endif %}
+  {% endfor %}
+
+{% endblock detail %}
+
+
+{% block return %}
+
+  <br>
+  <p>　<a href="/master/{{ master_type }}">戻る</a></p>
+
+{% endblock return %}

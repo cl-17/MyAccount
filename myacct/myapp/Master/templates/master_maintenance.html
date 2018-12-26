@@ -1,26 +1,40 @@
-<html>
-  <body>
-    <p>マスタメンテナンスメンテナンス</p>
-    {# この辺はテンプレートでBlock化したいかも #}
-    
-    {% if master_type == 'classification' %}
-      <p>分類コード：{{ model.ClassificationCode }}</p>
-      <p>分類名：{{ model.ClassificationName }}</p>
-      <p>登録ユーザ：{{ model.CreateUser }}</p>
-      <p>更新ユーザ：{{ model.UpdateUser }}</p>
-    {% elif master_type == 'purpose' %}
-      <p>用途コード：{{ model.PurposeCode }}</p>
-      <p>用途名：{{ model.PurposeName }}</p>
-      <p>登録ユーザ：{{ model.CreateUser }}</p>
-      <p>更新ユーザ：{{ model.UpdateUser }}</p>
-    {% endif %}
+{% extends 'base.html' %}
+{% load staticfiles %}
 
-    {% if primary_key == '' %}
-      <a href="/master/{{ master_type }}">戻る</a>
-    {% else %}
-      <a href="/master/{{ master_type }}/list">戻る</a>
-    {% endif %}
-    
-  </body>
-</html>
 
+{% block header %}
+
+  <title>{{ title }}</title>
+  <h1>■{{ title }}</h1>
+
+{% endblock header %}
+
+
+{% block detail %}
+
+  {% if master_type == 'classification' %}
+    <p>　・分類コード：{{ model.c_id }}</p>
+    <p>　・分類名：{{ model.c_name }}</p>
+    <p>　・登録ユーザ：{{ model.c_create_user }}</p>
+    <p>　・更新ユーザ：{{ model.c_update_user }}</p>
+  {% elif master_type == 'purpose' %}
+    <p>　・分類コード：{{ model.c_id }}</p>
+    <p>　・用途コード：{{ model.p_sub_id }}</p>
+    <p>　・用途名：{{ model.p_name }}</p>
+    <p>　・登録ユーザ：{{ model.p_create_user }}</p>
+    <p>　・更新ユーザ：{{ model.p_update_user }}</p>
+  {% endif %}
+
+{% endblock detail %}
+
+
+{% block return %}
+
+  <br>
+  {% if primary_key == '' %}
+    <a href="/master/{{ master_type }}">戻る</a>
+  {% else %}
+    <a href="/master/{{ master_type }}/list">戻る</a>
+  {% endif %}
+
+{% endblock return %}
