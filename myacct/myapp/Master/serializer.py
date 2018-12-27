@@ -26,6 +26,17 @@ class ClassificationSerializer(serializers.ModelSerializer):
             'c_update_date',
         )
 
+'''
+    def create(self, validated_data):
+        return Classification(**validated_data)
+
+    def update(self, instance, validated_data):
+        instance.c_create_user = validated_data.get('c_create_user', instance.c_create_user)
+        instance.c_create_date = validated_data.get('c_create_date', instance.c_create_date)
+        instance.c_update_user = validated_data.get('c_update_user', instance.c_update_user)
+        instance.c_update_date = validated_data.get('c_update_date', instance.c_update_date)
+        return instance
+'''
 
 class PurposeSerializer(serializers.ModelSerializer):
 
