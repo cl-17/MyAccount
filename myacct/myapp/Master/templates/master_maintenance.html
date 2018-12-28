@@ -31,9 +31,9 @@
 
   <br>
   {% if primary_key == '' %}
-    <a href="/master/{{ master_type }}">戻る</a>
+    <a href="{% url 'action' master_type %}">戻る</a>
   {% else %}
-    <a href="/master/{{ master_type }}/list">戻る</a>
+    <a href="{% url 'list' master_type %}">戻る</a>
   {% endif %}
 
 {% endblock return %}

@@ -1,8 +1,8 @@
 from django.db import models
-from django.utils import timezone
 from django.contrib.auth.models import User
 
-# Create your models here.
+############################################################################
+
 class Classification(models.Model):
     c_id = models.CharField(
         max_length=2,
@@ -20,7 +20,7 @@ class Classification(models.Model):
     )
 
     c_create_date = models.DateTimeField(
-        default=timezone.now,
+        auto_now_add=True,
     )
 
     c_update_user = models.ForeignKey(
@@ -30,12 +30,16 @@ class Classification(models.Model):
     )
 
     c_update_date = models.DateTimeField(
-        default=timezone.now,
+        auto_now=True,
     )
 
     def __str__(self):
         return self.c_name
 
+    def display(self):
+        return self.c_id + '：' + self.c_name
+
+############################################################################
 
 class Purpose(models.Model):
     p_id = models.CharField(
@@ -64,7 +68,7 @@ class Purpose(models.Model):
     )
 
     p_create_date = models.DateTimeField(
-        default=timezone.now,
+        auto_now_add=True,
     )
 
     p_update_user = models.ForeignKey(
@@ -74,11 +78,17 @@ class Purpose(models.Model):
     )
 
     p_update_date = models.DateTimeField(
-        default=timezone.now,
+        auto_now=True,
     )
 
     moldel_c = Classification()
 
     def __str__(self):
         return self.p_name
+
+    def display(self):
+        return self.p_id + '：' + self.p_name
+
+############################################################################
+
 

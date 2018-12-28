@@ -1,7 +1,8 @@
-# coding: utf-8
 from django.contrib.auth.models import User
 from rest_framework import serializers
 from .models import Classification, Purpose
+
+############################################################################
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -9,6 +10,8 @@ class UserSerializer(serializers.ModelSerializer):
         fields = (
             'user_name',
         )
+
+############################################################################
 
 class ClassificationSerializer(serializers.ModelSerializer):
 
@@ -26,17 +29,7 @@ class ClassificationSerializer(serializers.ModelSerializer):
             'c_update_date',
         )
 
-'''
-    def create(self, validated_data):
-        return Classification(**validated_data)
-
-    def update(self, instance, validated_data):
-        instance.c_create_user = validated_data.get('c_create_user', instance.c_create_user)
-        instance.c_create_date = validated_data.get('c_create_date', instance.c_create_date)
-        instance.c_update_user = validated_data.get('c_update_user', instance.c_update_user)
-        instance.c_update_date = validated_data.get('c_update_date', instance.c_update_date)
-        return instance
-'''
+############################################################################
 
 class PurposeSerializer(serializers.ModelSerializer):
 
@@ -55,5 +48,7 @@ class PurposeSerializer(serializers.ModelSerializer):
             'p_update_user',
             'p_update_date',
         )
+
+############################################################################
 
 

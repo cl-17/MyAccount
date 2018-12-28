@@ -1,6 +1,7 @@
 from django import forms
-from .models import Classification, Purpose
+from Master.models import Classification, Purpose
 
+############################################################################
 
 class ClassificationForm(forms.ModelForm):
 
@@ -11,7 +12,10 @@ class ClassificationForm(forms.ModelForm):
             'c_name',
         )
 
+############################################################################
+
 class PurposeForm(forms.ModelForm):
+
     class Meta:
         model = Purpose
         fields = (
@@ -19,3 +23,7 @@ class PurposeForm(forms.ModelForm):
             'p_sub_id',
             'p_name',
         )
+
+############################################################################
+
+

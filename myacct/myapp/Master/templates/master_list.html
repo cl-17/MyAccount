@@ -13,11 +13,7 @@
 {% block detail %}
 
   {% for model in models %}
-    {% if master_type == 'classification' %}
-      <p>　・<a href="/master/{{ master_type }}/maintenance/{{ model.c_id }}">{{ model.c_id }}：{{ model.c_name }}</a></p>
-    {% elif master_type == 'purpose' %}
-      <p>　・<a href="/master/{{ master_type }}/maintenance/{{ model.p_id }}">{{ model.p_id }}：{{ model.p_name }}</a></p>
-    {% endif %}
+    <p>　・<a href="{% url 'update' master_type model.pk %}">{{ model.display }}</a></p>
   {% endfor %}
 
 {% endblock detail %}
@@ -26,6 +22,8 @@
 {% block return %}
 
   <br>
-  <p>　<a href="/master/{{ master_type }}">戻る</a></p>
+  <p>　<a href="{% url 'action' master_type %}">戻る</a></p>
 
 {% endblock return %}
+
+

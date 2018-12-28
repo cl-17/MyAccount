@@ -12,8 +12,8 @@
 
 {% block detail %}
 
-  <p>　・<a href="/master/classification">分類マスタ</a></p>
-  <p>　・<a href="/master/purpose">用途マスタ</a></p>
+  <p>　・<a href="{% url 'action' 'classification' %}">分類マスタ</a></p>
+  <p>　・<a href="{% url 'action' 'purpose' %}">用途マスタ</a></p>
 
 {% endblock detail %}
 
