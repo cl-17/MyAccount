@@ -1,15 +1,15 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.views.generic import CreateView, UpdateView
-from rest_framework import viewsets, filters
+from rest_framework import viewsets
 from Master.models import Classification, Purpose
-from Master.forms import ClassificationForm, PurposeForm
+from Master.forms import ClassificationForm_c, ClassificationForm_u, PurposeForm_c, PurposeForm_u
 from Master.serializer import ClassificationSerializer, PurposeSerializer, UserSerializer
 
 ############################################################################
 
 class ClassificationViewSet(viewsets.ModelViewSet):
-    queryset = Classification.objects.all()
+    queryset = Classification.objects.all().order_by('c_id')
     serializer_class = ClassificationSerializer
     filter_fields = (
         'c_id',
@@ -19,7 +19,7 @@ class ClassificationViewSet(viewsets.ModelViewSet):
 ############################################################################
 
 class PurposeViewSet(viewsets.ModelViewSet):
-    queryset = Purpose.objects.all()
+    queryset = Purpose.objects.all().order_by('p_id')
     serializer_class = PurposeSerializer
     filter_fields = (
         'p_id',
@@ -38,22 +38,23 @@ class UserViewSet(viewsets.ModelViewSet):
 
 ############################################################################
 
-#　★大体一緒だから、登録と更新で共通化したい
-#　★用途マスタも対応して、なるべく共通化したい（分類マスタごとに絞りこみたい）
-#　　※画面の追加は面倒だし、２段階構成にするか？
-#　★最終的な理想は追加ボタンがあって、どっちのマスタも同時に１画面で登録も更新も削除もできるとか？
+# TODO ★大体一緒だから、登録と更新で共通化したい
+# TODO ★用途マスタも対応して、なるべく共通化したい（分類マスタごとに絞りこみたい）
+# TODO 　※画面の追加は面倒だし、２段階構成にするか？
+# TODO 分類コード登録時に用途コード99を登録したい（名称はその他で固定）
+# TODO →用途コードの99は一覧から除外する？
 class Test_c(CreateView):
     model = Classification
-    form_class = ClassificationForm
+    form_class = ClassificationForm_c
     template_name = 'master_maintenance.html'
     master_type = 'classification'
 
     def get_context_data(self, **kwargs):
-        ctx = super(Test_c, self).get_context_data(**kwargs)
-        ctx['title'] = '分類マスタ（登録）'
-        ctx['master_type'] = self.master_type
-        ctx['primary_key'] = ''
-        return ctx
+        context = super(Test_c, self).get_context_data(**kwargs)
+        context['title'] = '分類マスタ（登録）'
+        context['master_type'] = self.master_type
+        context['primary_key'] = ''
+        return context
 
     def form_valid(self, form):
         classification = form.save(commit=False)
@@ -66,21 +67,67 @@ class Test_c(CreateView):
 
 class Test_u(UpdateView):
     model = Classification
-    form_class = ClassificationForm
+    form_class = ClassificationForm_u
     template_name = 'master_maintenance.html'
     pk_url_kwarg = 'primary_key'
     master_type = 'classification'
 
     def get_context_data(self, **kwargs):
-        context  = super(Test_u, self).get_context_data(**kwargs)
-        context ['title'] = '分類マスタ（更新）'
-        context ['master_type'] = 'classification'
+        context = super(Test_u, self).get_context_data(**kwargs)
+        context['title'] = '分類マスタ（更新）'
+        context['master_type'] = self.master_type
         return context
 
     def form_valid(self, form):
         classification = form.save(commit=False)
         classification.c_update_user = self.request.user
         classification.save()
+        return redirect('list', master_type=self.master_type)
+
+############################################################################
+
+class Test2_c(CreateView):
+    model = Purpose
+    form_class = PurposeForm_c
+    template_name = 'master_maintenance.html'
+    master_type = 'purpose'
+
+    # TODO 分類コードのリストのソート順を変えたい
+    # TODO キーのコードを自動採番するようにしたい（99は除外した最大＋１）
+    def get_context_data(self, **kwargs):
+        context = super(Test2_c, self).get_context_data(**kwargs)
+        context['title'] = '用途マスタ（登録）'
+        context['master_type'] = self.master_type
+        context['primary_key'] = ''
+        return context
+
+    def form_valid(self, form):
+        purpose = form.save(commit=False)
+        purpose.p_id = purpose.c_id.c_id + purpose.p_sub_id
+        purpose.p_create_user = self.request.user
+        purpose.p_update_user = self.request.user
+        purpose.save()
+        return redirect('list', master_type=self.master_type)
+
+############################################################################
+
+class Test2_u(UpdateView):
+    model = Purpose
+    form_class = PurposeForm_u
+    template_name = 'master_maintenance.html'
+    pk_url_kwarg = 'primary_key'
+    master_type = 'purpose'
+
+    def get_context_data(self, **kwargs):
+        context = super(Test2_u, self).get_context_data(**kwargs)
+        context['title'] = '用途マスタ（更新）'
+        context['master_type'] = self.master_type
+        return context
+
+    def form_valid(self, form):
+        purpose = form.save(commit=False)
+        purpose.p_update_user = self.request.user
+        purpose.save()
         return redirect('list', master_type=self.master_type)
 
 ############################################################################
@@ -112,7 +159,7 @@ def master_list(request, master_type):
         models = Classification.objects.all().order_by('c_id')
         title = '分類マスタ一覧'
     elif master_type == 'purpose':
-        models = Purpose.objects.all().order_by('c_id')
+        models = Purpose.objects.all().order_by('p_id')
         title = '用途マスタ一覧'
     d = {
         'title': title,

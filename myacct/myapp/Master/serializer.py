@@ -1,10 +1,10 @@
 from django.contrib.auth.models import User
-from rest_framework import serializers
+from rest_framework.serializers import ModelSerializer
 from .models import Classification, Purpose
 
 ############################################################################
 
-class UserSerializer(serializers.ModelSerializer):
+class UserSerializer(ModelSerializer):
     class Meta:
         model = User
         fields = (
@@ -13,7 +13,7 @@ class UserSerializer(serializers.ModelSerializer):
 
 ############################################################################
 
-class ClassificationSerializer(serializers.ModelSerializer):
+class ClassificationSerializer(ModelSerializer):
 
     c_create_user = UserSerializer()
     c_update_user = UserSerializer()
@@ -31,10 +31,11 @@ class ClassificationSerializer(serializers.ModelSerializer):
 
 ############################################################################
 
-class PurposeSerializer(serializers.ModelSerializer):
+class PurposeSerializer(ModelSerializer):
 
     p_create_user = UserSerializer()
     p_update_user = UserSerializer()
+    c_id = ClassificationSerializer()
 
     class Meta:
         model = Purpose
