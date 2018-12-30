@@ -1,14 +1,14 @@
 from django.urls import path, include
-#from rest_framework import routers
+from rest_framework import routers
 from Master import views
-#from Master.views import ClassificationViewSet, PurposeViewSet
+from Master.views import ClassificationViewSet, PurposeViewSet
 from Master.views import Test_c, Test_u, Test2_c, Test2_u
 
 ############################################################################
 
-#router= routers.DefaultRouter()
-#router.register('classification', ClassificationViewSet)
-#router.register('purpose', PurposeViewSet)
+router= routers.DefaultRouter()
+router.register('classification', ClassificationViewSet)
+router.register('purpose', PurposeViewSet)
 
 ############################################################################
 

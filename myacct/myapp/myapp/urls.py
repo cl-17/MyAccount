@@ -15,10 +15,17 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from Master.urls import router as master_router
+
+from Master.views import get_classfication
+from django.views.generic.base import TemplateView
 
 urlpatterns = [
-    path('admin/', admin.site.urls, name='admin'),
-    path('master/', include('Master.urls'), name='master'),
+    path(r'admin/', admin.site.urls, name='admin'),
+    path(r'master/', include('Master.urls'), name='master'),
+    path(r'master_api/', include(master_router.urls), name='master_router'),
+    path(r'^get_classfication/', get_classfication),
+    path(r'^.*', TemplateView.as_view(template_name="angular_base.html"), name="angular_base"),
 ]
 
 

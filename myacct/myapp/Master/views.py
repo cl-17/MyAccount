@@ -6,6 +6,10 @@ from Master.models import Classification, Purpose
 from Master.forms import ClassificationForm_c, ClassificationForm_u, PurposeForm_c, PurposeForm_u
 from Master.serializer import ClassificationSerializer, PurposeSerializer, UserSerializer
 
+# 以下、Angular用に追加
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+
 ############################################################################
 
 class ClassificationViewSet(viewsets.ModelViewSet):
@@ -169,4 +173,12 @@ def master_list(request, master_type):
     return render(request, 'master_list.html', d)
 
 ############################################################################
+
+# 以下、Angular用に追加
+@csrf_exempt
+def get_classfication(request):
+    data = Classification.objects.all().order_by('c_id')
+    if request.method == 'GET':
+        serializer = ClassificationSerializer(data, many=True)
+        return JsonResponse(serializer.data, safe=False)
 
