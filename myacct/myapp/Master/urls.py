@@ -13,13 +13,13 @@ router.register('purpose', PurposeViewSet)
 ############################################################################
 
 urlpatterns = [
-    path(r'', views.master_main, name='main'),
-    path(r'<str:master_type>', views.master_action, name='action'),
-    path(r'<str:master_type>/list', views.master_list, name='list'),
-    path(r'purpose/maintenance', Test2_c.as_view(), name='new_p'),
-    path(r'<str:master_type>/maintenance', Test_c.as_view(), name='new'),
-    path(r'purpose/maintenance/<str:primary_key>', Test2_u.as_view(), name='update_p'),
-    path(r'<str:master_type>/maintenance/<str:primary_key>', Test_u.as_view(), name='update'),
+    path('', views.master_main, name='main'),
+    path('<str:master_type>', views.master_action, name='action'),
+    path('<str:master_type>/list', views.master_list, name='list'),
+    path('purpose/maintenance', Test2_c.as_view(), name='new_p'),
+    path('<str:master_type>/maintenance', Test_c.as_view(), name='new'),
+    path('purpose/maintenance/<str:primary_key>', Test2_u.as_view(), name='update_p'),
+    path('<str:master_type>/maintenance/<str:primary_key>', Test_u.as_view(), name='update'),
     #path(r'<str:master_type>/maintenance', views.master_maintenance, name='new'),
     #path(r'<str:master_type>/maintenance/<str:primary_key>', views.master_maintenance, name='update'),
 ]

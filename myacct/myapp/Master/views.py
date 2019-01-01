@@ -176,7 +176,7 @@ def master_list(request, master_type):
 
 # 以下、Angular用に追加
 @csrf_exempt
-def get_classfication(request):
+def get_classification(request):
     data = Classification.objects.all().order_by('c_id')
     if request.method == 'GET':
         serializer = ClassificationSerializer(data, many=True)

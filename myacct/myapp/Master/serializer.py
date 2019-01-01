@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from rest_framework.serializers import ModelSerializer
-from .models import Classification, Purpose
+from Master.models import Classification, Purpose
 
 ############################################################################
 
