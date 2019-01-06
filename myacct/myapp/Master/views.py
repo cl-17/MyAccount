@@ -96,7 +96,6 @@ class Test2_c(CreateView):
     template_name = 'master_maintenance.html'
     master_type = 'purpose'
 
-    # TODO 分類コードのリストのソート順を変えたい
     # TODO キーのコードを自動採番するようにしたい（99は除外した最大＋１）
     def get_context_data(self, **kwargs):
         context = super(Test2_c, self).get_context_data(**kwargs)

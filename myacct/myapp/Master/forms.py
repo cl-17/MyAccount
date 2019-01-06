@@ -32,7 +32,7 @@ class ClassificationForm_u(ModelForm):
     def __init__(self, *args, **kwargs):
         super(ClassificationForm_u, self).__init__(*args, **kwargs)
         for val in self.read_only:
-            self.fields[val].widget.attrs['disabled'] = 'disabled'
+            self.fields[val].widget.attrs['readonly'] = 'readonly'
 
     def clean(self):
         data = super(ClassificationForm_u, self).clean()
@@ -72,7 +72,7 @@ class PurposeForm_u(ModelForm):
     def __init__(self, *args, **kwargs):
         super(PurposeForm_u, self).__init__(*args, **kwargs)
         for val in self.read_only:
-            self.fields[val].widget.attrs['disabled'] = 'disabled'
+            self.fields[val].widget.attrs['readonly'] = 'readonly'
 
     def clean(self):
         data = super(PurposeForm_u, self).clean()
