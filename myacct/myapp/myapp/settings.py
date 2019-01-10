@@ -148,6 +148,12 @@ REST_FRAMEWORK = {
 CORS_ALLOW_CREDENTIALS = True
 CORS_ORIGIN_ALLOW_ALL = True
 
-
-
+# For debugging 
+import logging
+if DEBUG:
+    # will output to your console
+    logging.basicConfig(
+        level = logging.DEBUG,
+        format = '%(asctime)s %(levelname)s %(message)s',
+    )
 
