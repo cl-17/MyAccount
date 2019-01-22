@@ -13,6 +13,8 @@ from rest_framework.decorators import list_route
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.db.models import Max
+from django.db import connection
+import json
 
 # 以下、Debug用に追加
 import logging
@@ -29,8 +31,13 @@ class ClassificationViewSet(viewsets.ModelViewSet):
 
     @list_route(url_path='get-next-pk')
     def get_next_pk(self, request):
-        # 最大値＋１を取得する必要がある（文字列の＋１ができないから取得が困難、数値型の変数に入れるにしても戻り値が単純文字じゃないから値を分解する必要あり
-        return JsonResponse(Classification.objects.exclude(c_id='99').aggregate(next_pk=Max('c_id')), safe=False)
+        return_value = {}
+        strSQL = 'SELECT TO_CHAR(TO_NUMBER(MAX(c_id), \'99\') + 1, \'FM00\') AS next_pk FROM \"Master_classification\" WHERE NOT c_id = \'99\''
+        with connection.cursor() as cursor:
+            cursor.execute(strSQL)
+            row = cursor.fetchone()
+        return_value['next_pk'] = row[0]
+        return JsonResponse(return_value)
 
 ############################################################################
 
