@@ -2,6 +2,9 @@ from django.contrib.auth.models import User
 from rest_framework.serializers import ModelSerializer
 from Master.models import Classification, Purpose
 
+# 以下、Debug用に追加
+import logging
+
 ############################################################################
 
 class UserSerializer(ModelSerializer):
@@ -28,6 +31,14 @@ class ClassificationSerializer(ModelSerializer):
             'c_update_user',
             'c_update_date',
         )
+    
+    def create(self, validated_data):
+        classification = Classification(**validated_data)
+        if classification.c_create_user == '':
+            classification.c_create_user = User.objects.get(id=3)
+        if classification.c_update_user == '':
+            classification.c_update_user = User.objects.get(id=3)
+        return classification
 
 ############################################################################
 

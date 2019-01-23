@@ -14,6 +14,7 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.db.models import Max
 from django.db import connection
+from django.core import serializers
 import json
 
 # 以下、Debug用に追加
@@ -28,6 +29,12 @@ class ClassificationViewSet(viewsets.ModelViewSet):
         'c_id',
         'c_create_user',
     )
+
+    @list_route(url_path='get-all')
+    def get_all(self, request):
+        data = Classification.objects.all().order_by('c_id')
+        serializer = ClassificationSerializer(data, many=True)
+        return JsonResponse(serializer.data, safe=False)
 
     @list_route(url_path='get-next-pk')
     def get_next_pk(self, request):
@@ -56,8 +63,16 @@ class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     filter_fields = (
-        'user_name',
+        'username',
     )
+
+    @list_route(url_path='get-user')
+    # 仮
+    def get_user(self, request):
+        return_value = {}
+        user = User.objects.get(id=3)
+        return_value['username'] = user.username
+        return JsonResponse(return_value)
 
 ############################################################################
 
@@ -192,11 +207,11 @@ def master_list(request, master_type):
 
 ############################################################################
 
-# 以下、Angular用に追加
-@csrf_exempt
-def get_classification(request):
-    data = Classification.objects.all().order_by('c_id')
-    if request.method == 'GET':
-        serializer = ClassificationSerializer(data, many=True)
-        return JsonResponse(serializer.data, safe=False)
+# デバッグ用
+def output_log(msg):
+    logger = logging.getLogger('command')
+    logger.info(msg)
+
+############################################################################
+
 
