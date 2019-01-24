@@ -15,7 +15,7 @@ class Classification(models.Model):
 
     c_create_user = models.ForeignKey(
         User, 
-        on_delete=models.DO_NOTHING,
+        on_delete=models.PROTECT,
         related_name='c_create_user',
     )
 
@@ -25,7 +25,7 @@ class Classification(models.Model):
 
     c_update_user = models.ForeignKey(
         User,
-        on_delete=models.DO_NOTHING,
+        on_delete=models.PROTECT,
         related_name='c_update_user',
     )
 
@@ -53,7 +53,7 @@ class Purpose(models.Model):
 
     c_id = models.ForeignKey(
         Classification,
-        on_delete=models.DO_NOTHING,
+        on_delete=models.PROTECT,
     )
 
     p_sub_id = models.CharField(
@@ -63,7 +63,7 @@ class Purpose(models.Model):
 
     p_create_user = models.ForeignKey(
         User,
-        on_delete=models.DO_NOTHING,
+        on_delete=models.PROTECT,
         related_name='p_create_user',
     )
 
@@ -73,7 +73,7 @@ class Purpose(models.Model):
 
     p_update_user = models.ForeignKey(
         User,
-        on_delete=models.DO_NOTHING,
+        on_delete=models.PROTECT,
         related_name='p_update_user',
     )
 

@@ -71,6 +71,7 @@ class UserViewSet(viewsets.ModelViewSet):
     def get_user(self, request):
         return_value = {}
         user = User.objects.get(id=3)
+        return_value['id'] = user.id
         return_value['username'] = user.username
         return JsonResponse(return_value)
 
