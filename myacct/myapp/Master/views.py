@@ -36,14 +36,14 @@ class ClassificationViewSet(viewsets.ModelViewSet):
         serializer = ClassificationSerializer(data, many=True)
         return JsonResponse(serializer.data, safe=False)
 
-    @list_route(url_path='get-next-pk')
-    def get_next_pk(self, request):
+    @list_route(url_path='get-next-key')
+    def get_next_key(self, request):
         return_value = {}
-        strSQL = 'SELECT TO_CHAR(TO_NUMBER(MAX(c_id), \'99\') + 1, \'FM00\') AS next_pk FROM \"Master_classification\" WHERE NOT c_id = \'99\''
+        strSQL = 'SELECT TO_CHAR(TO_NUMBER(MAX(c_id), \'99\') + 1, \'FM00\') AS next_key FROM \"Master_classification\" WHERE NOT c_id = \'99\''
         with connection.cursor() as cursor:
             cursor.execute(strSQL)
             row = cursor.fetchone()
-        return_value['next_pk'] = row[0]
+        return_value['next_key'] = row[0]
         return JsonResponse(return_value)
 
 ############################################################################
@@ -56,6 +56,22 @@ class PurposeViewSet(viewsets.ModelViewSet):
         'c_id',
         'p_create_user',
     )
+
+    @list_route(url_path='get-all')
+    def get_all(self, request):
+        data = Purpose.objects.all().order_by('p_id')
+        serializer = PurposeSerializer(data, many=True)
+        return JsonResponse(serializer.data, safe=False)
+
+    @list_route(url_path='get-next-key/(?P<c_id>[0-9][0-9])')
+    def get_next_key(self, request, c_id):
+        return_value = {}
+        strSQL = 'SELECT TO_CHAR(TO_NUMBER(MAX(p_sub_id), \'99\') + 1, \'FM00\') AS next_key FROM \"Master_purpose\" WHERE c_id_id = \'' + c_id + '\' AND NOT p_sub_id = \'99\''
+        with connection.cursor() as cursor:
+            cursor.execute(strSQL)
+            row = cursor.fetchone()
+        return_value['next_key'] = row[0]
+        return JsonResponse(return_value)
 
 ############################################################################
 
