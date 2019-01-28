@@ -39,7 +39,7 @@ class ClassificationViewSet(viewsets.ModelViewSet):
     @list_route(url_path='get-next-key')
     def get_next_key(self, request):
         return_value = {}
-        strSQL = 'SELECT TO_CHAR(TO_NUMBER(MAX(c_id), \'99\') + 1, \'FM00\') AS next_key FROM \"Master_classification\" WHERE NOT c_id = \'99\''
+        strSQL = 'SELECT TO_CHAR(TO_NUMBER(COALESCE(MAX(c_id), \'00\'), \'99\') + 1, \'FM00\') AS next_key FROM \"Master_classification\" WHERE NOT c_id = \'99\''
         with connection.cursor() as cursor:
             cursor.execute(strSQL)
             row = cursor.fetchone()
@@ -66,7 +66,7 @@ class PurposeViewSet(viewsets.ModelViewSet):
     @list_route(url_path='get-next-key/(?P<c_id>[0-9][0-9])')
     def get_next_key(self, request, c_id):
         return_value = {}
-        strSQL = 'SELECT TO_CHAR(TO_NUMBER(MAX(p_sub_id), \'99\') + 1, \'FM00\') AS next_key FROM \"Master_purpose\" WHERE c_id_id = \'' + c_id + '\' AND NOT p_sub_id = \'99\''
+        strSQL = 'SELECT TO_CHAR(TO_NUMBER(COALESCE(MAX(p_sub_id), \'00\'), \'99\') + 1, \'FM00\') AS next_key FROM \"Master_purpose\" WHERE c_id_id = \'' + c_id + '\' AND NOT p_sub_id = \'99\''
         with connection.cursor() as cursor:
             cursor.execute(strSQL)
             row = cursor.fetchone()
