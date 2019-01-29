@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block header %}
+
+  <title>{{ title }}</title>
+  <h1>■{{ title }}</h1>
+
+{% endblock header %}
+
+
+{% block detail %}
+
+  <p>　・<a href="{% url 'list' master_type %}">一覧を確認する</a></p>
+  <p>　・<a href="{% url 'new' master_type %}">登録する</a></p>
+
+{% endblock detail %}
+
+
+{% block return %}
+
+  <br>
+  <p>　<a href="{% url 'main' %}">戻る</a></p>
+
+{% endblock return %}

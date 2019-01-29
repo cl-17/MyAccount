@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block header %}
+
+  <title>{{ title }}</title>
+  <h1>■{{ title }}</h1>
+
+{% endblock header %}
+
+
+{% block detail %}
+
+  <form method="post">
+    {% csrf_token %}
+      <table>
+        {{ form.as_table }}
+      </table>
+    {% if primary_key == '' %}
+      <button type="submit">登録</button>
+    {% else %}
+      <button type="submit">更新</button>
+    {% endif %}
+  </form>
+
+{% endblock detail %}
+
+
+{% block return %}
+
+  <br>
+  {% if primary_key == '' %}
+    <a href="{% url 'action' master_type %}">戻る</a>
+  {% else %}
+    <a href="{% url 'list' master_type %}">戻る</a>
+  {% endif %}
+
+{% endblock return %}
+
+
