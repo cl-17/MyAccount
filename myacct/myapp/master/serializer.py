@@ -3,9 +3,6 @@ from rest_framework import serializers
 from rest_framework.serializers import ModelSerializer
 from master.models import Classification, Purpose
 
-# 以下、Debug用に追加
-import logging
-
 ############################################################################
 
 class UserSerializer(ModelSerializer):
@@ -168,12 +165,5 @@ class PurposeSerializer(ModelSerializer):
 
         instance.save()
         return instance
-
-############################################################################
-
-# デバッグ用
-def output_log(msg):
-    logger = logging.getLogger('command')
-    logger.info(msg)
 
 ############################################################################

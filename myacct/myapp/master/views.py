@@ -27,6 +27,7 @@ class ClassificationViewSet(viewsets.ModelViewSet):
     serializer_class = ClassificationSerializer
     filter_fields = (
         'id',
+        'name',
         'create_user',
     )
 
@@ -53,6 +54,7 @@ class PurposeViewSet(viewsets.ModelViewSet):
     serializer_class = PurposeSerializer
     filter_fields = (
         'id',
+        'name',
         'classification',
         'create_user',
     )
