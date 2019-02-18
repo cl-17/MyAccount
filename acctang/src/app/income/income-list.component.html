@@ -1,0 +1,48 @@
+<!-- <h1>{{ title | uppercase }}</h1>
+
+<br>
+
+<input [(ngModel)]="added.classification_id"
+          type="text"
+          length="2"
+          placeholder="classification_id"
+        >
+<input [(ngModel)]="added.name"
+          type="text"
+          length="50"
+          placeholder="name"
+        >
+<button (click)="onAdd()">Add</button>
+
+<br>
+
+<ul class="purposes">
+    <li *ngFor="let purpose of purposes" [class.selected]="purpose === selected" (click)="onSelect(purpose)"> 
+        <span class="badge">{{purpose.classification.id}}-{{purpose.sub_id}}</span> {{purpose.name}}
+    </li>
+</ul>
+
+<br>
+
+<div *ngIf="selected">
+    <h2>{{ selected.p_name | uppercase }} Details</h2>
+    <div><span>c_id: </span>{{ selected.classification.id }}</div>
+    <div><span>c_name: </span>{{ selected.classification.name }}</div>
+    <div><span>sub_id: </span>{{ selected.sub_id }}</div>
+    <div>
+      <label>p_name:
+        <input [(ngModel)]="selected.name"
+          type="text"
+          length="50"
+          placeholder="name"
+          (keydown.enter)="onUpdate(selected)"
+        >
+      </label>
+    </div>
+    <div><span>create_user: </span>{{ selected.create_user.username }}</div>
+    <div><span>update_user: </span>{{ selected.update_user.username }}</div>
+    <button (click)="onUpdate(selected)">Update</button>
+    <button (click)="onDelete(selected)">Delete</button>
+</div>
+
+ -->

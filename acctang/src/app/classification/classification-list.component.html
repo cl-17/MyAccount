@@ -1,0 +1,42 @@
+<h1>{{ title | uppercase }}</h1>
+
+<br>
+
+<input [(ngModel)]="added.name"
+          type="text"
+          length="50"
+          placeholder="name"
+          (keydown.enter)="onAdd()"
+        >
+<button (click)="onAdd()">Add</button>
+
+<br>
+
+<ul class="classifications">
+    <li *ngFor="let classification of classifications" [class.selected]="classification === selected" (click)="onSelect(classification)"> 
+        <span class="badge">{{classification.id}}</span> {{classification.name}}
+    </li>
+</ul>
+
+<br>
+
+<div *ngIf="selected">
+    <h2>{{ selected.c_name | uppercase }} Details</h2>
+    <div><span>id: </span>{{ selected.id }}</div>
+    <div>
+      <label>name:
+        <input [(ngModel)]="selected.name"
+          type="text"
+          length="50"
+          placeholder="name"
+          (keydown.enter)="onUpdate(selected)"
+        >
+      </label>
+    </div>
+    <div><span>create_user: </span>{{ selected.create_user.username }}</div>
+    <div><span>update_user: </span>{{ selected.update_user.username }}</div>
+    <button (click)="onUpdate(selected)">Update</button>
+    <button (click)="onDelete(selected)">Delete</button>
+</div>
+
+

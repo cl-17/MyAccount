@@ -1,0 +1,59 @@
+<h1>{{ title | uppercase }}</h1>
+
+<br>
+
+<input [(ngModel)]="added.date"
+          type="date"
+          placeholder="date"
+        >
+<input [(ngModel)]="added.classification_id"
+          type="text"
+          length=2
+          placeholder="c_id"
+        >
+<input [(ngModel)]="added.sub_id"
+          type="text"
+          length=2
+          placeholder="sub_id"
+        >
+<input [(ngModel)]="added.ammount"
+          type="number"
+          placeholder="ammount"
+        >
+<input [(ngModel)]="added.credit"
+          type="checkbox"
+          [checked]="added.credit"
+        >
+<button (click)="onAdd()">Add</button>
+
+<br>
+
+<ul class="expenses">
+    <li *ngFor="let expense of expenses" [class.selected]="expense === selected" (click)="onSelect(expense)"> 
+        <span class="badge">{{expense.date}}</span> {{expense.ammount}}
+    </li>
+</ul>
+
+<br>
+
+<div *ngIf="selected">
+  <h2>Details</h2>
+  <div><span>c_id: </span>{{ selected.purpose.classification.id }}</div>
+  <div><span>c_name: </span>{{ selected.purpose.classification.name }}</div>
+  <div><span>sub_id: </span>{{ selected.purpose.sub_id }}</div>
+  <div><span>sub_name: </span>{{ selected.purpose.name }}</div>
+  <div>
+    <label>ammount:
+      <input [(ngModel)]="selected.ammount"
+        type="number"
+        placeholder="ammount"
+        (keydown.enter)="onUpdate(selected)"
+      >
+    </label>
+  </div>
+  <div><span>credit: </span>{{ selected.credit }}</div>
+  <button (click)="onUpdate(selected)">Update</button>
+  <button (click)="onDelete(selected)">Delete</button>
+</div>
+
+
