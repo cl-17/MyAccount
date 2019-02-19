@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Classification } from '../classification/classification.model';
+import { Classification } from '../models/classification.model';
 
 'rxjs/add/operator/toPromise';
 

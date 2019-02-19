@@ -1,12 +1,12 @@
 import { Component, Input } from '@angular/core';
 
-import { ExpenseService } from '../expense/expense.service';
-import { InputExpense } from '../expense/expense.model';
+import { ExpenseService } from '../../shared/services/expense.service';
+import { InputExpense } from '../../shared/models/expense.model';
 
 @Component({
     selector: 'expense-input',
-    templateUrl: '../expense/expense-input.component.html',
-    styleUrls: ['../expense/expense-input.component.css']
+    templateUrl: './expense-input.component.html',
+    styleUrls: ['./expense-input.component.css']
 })
 export class ExpenseInputComponent {
 

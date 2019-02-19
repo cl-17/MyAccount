@@ -1,5 +1,5 @@
-import { User } from '../user/user.model';
-import { Classification } from '../classification/classification.model';
+import { User } from './user.model';
+import { Classification } from './classification.model';
 
 export class Income {
     classification_id: string;

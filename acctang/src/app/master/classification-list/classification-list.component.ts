@@ -1,12 +1,12 @@
 import { Component, Input } from '@angular/core';
 
-import { ClassificationService } from '../classification/classification.service';
-import { Classification } from '../classification/classification.model';
+import { ClassificationService } from '../../shared/services/classification.service';
+import { Classification } from '../../shared/models/classification.model';
 
 @Component({
     selector: 'classification-list',
-    templateUrl: '../classification/classification-list.component.html',
-    styleUrls: ['../classification/classification-list.component.css']
+    templateUrl: './classification-list.component.html',
+    styleUrls: ['./classification-list.component.css']
 })
 export class ClassificationListComponent {
 
