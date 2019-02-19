@@ -5,6 +5,7 @@ import { HttpClientModule, HttpClientXsrfModule, HTTP_INTERCEPTORS, HttpIntercep
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { MainPageComponent } from './mainpage/mainpage.component';
 import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
 import { MasterMainComponent } from './master/master-main/master-main.component';
 import { ClassificationListComponent } from './master/classification-list/classification-list.component';
@@ -42,6 +43,7 @@ export class HttpXsrfInterceptor implements HttpInterceptor {
 @NgModule({
   declarations: [
     AppComponent,
+    MainPageComponent,
     PagenotfoundComponent,
     MasterMainComponent,
     ClassificationListComponent,
