@@ -1,13 +1,13 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Income } from '../income/income.model';
+import { Purpose } from '../models/purpose.model';
 
 'rxjs/add/operator/toPromise';
 
 @Injectable()
-export class IncomeService {
+export class PurposeService {
 
-    private url_income: string = `http://127.0.0.1:18000/master_api/income/`;
+    private url_purpose: string = `http://127.0.0.1:18000/master_api/purpose/`;
     private headers: HttpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
 
     constructor(
@@ -15,51 +15,51 @@ export class IncomeService {
     ){
     }
 
-    public getAll(): Promise<Income[]> {
-        const url = `${this.url_income}get-all/`;
+    public getAll(): Promise<Purpose[]> {
+        const url = `${this.url_purpose}get-all/`;
         return this.http.get(url, {headers: this.headers})
             .toPromise()
-            .then((res) => res as Income[])
+            .then((res) => res as Purpose[])
             .catch(this.errorHandler);
     }
 
     public getNewPK(c_id: string): Promise<string> {
-        const url = `${this.url_income}get-next-key/${c_id}/`;
+        const url = `${this.url_purpose}get-next-key/${c_id}/`;
         return this.http.get(url, {headers: this.headers})
             .toPromise()
             .then((res) => res['next_key'] as string)
             .catch(this.errorHandler);
     }
 
-    public create(added: Income): Promise<Income> {
+    public create(added: Purpose): Promise<Purpose> {
         return this.getNewPK(added.classification_id)
             .then((res) => {
                 added.sub_id = res
                 // セッション管理するようになったら、ちゃんと取得すること
                 added.update_user_id = 1
-                return this.http.post(this.url_income, added, {headers: this.headers})
+                return this.http.post(this.url_purpose, added, {headers: this.headers})
                     .toPromise()
-                    .then((res) => res as Income)
+                    .then((res) => res as Purpose)
                     .catch(this.errorHandler);
             })
             .catch(this.errorHandler);
     }
 
-    public delete(deleted: Income): Promise<void> {
-        const url = `${this.url_income}${deleted.classification.id}${deleted.sub_id}/`;
+    public delete(deleted: Purpose): Promise<void> {
+        const url = `${this.url_purpose}${deleted.classification.id}${deleted.sub_id}/`;
         return this.http.delete(url, {headers: this.headers})
             .toPromise()
             .then(() => null)
             .catch(this.errorHandler);
     }
 
-    public update(updated: Income): Promise<Income> {
-        const url = `${this.url_income}${updated.classification.id}${updated.sub_id}/`;
+    public update(updated: Purpose): Promise<Purpose> {
+        const url = `${this.url_purpose}${updated.classification.id}${updated.sub_id}/`;
         // セッション管理するようになったら、ちゃんと取得すること
         updated.update_user_id = 2
         return this.http.put(url, updated, {headers: this.headers})
             .toPromise()
-            .then((res) => res as Income)
+            .then((res) => res as Purpose)
             .catch(this.errorHandler);
     }
 

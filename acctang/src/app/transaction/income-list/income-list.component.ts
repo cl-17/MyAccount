@@ -1,13 +1,12 @@
 import { Component, Input } from '@angular/core';
 
-import { IncomeService } from '../income/income.service';
-import { Income } from '../income/income.model';
-import { Classification } from '../classification/classification.model';
+import { IncomeService } from '../../shared/services/income.service';
+import { Income } from '../../shared/models/income.model';
 
 @Component({
     selector: 'income-list',
-    templateUrl: '../income/income-list.component.html',
-    styleUrls: ['../income/income-list.component.css']
+    templateUrl: './income-list.component.html',
+    styleUrls: ['./income-list.component.css']
 })
 export class IncomeListComponent {
 

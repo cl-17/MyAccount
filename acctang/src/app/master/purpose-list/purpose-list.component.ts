@@ -1,12 +1,12 @@
 import { Component, Input } from '@angular/core';
 
-import { PurposeService } from '../purpose/purpose.service';
-import { Purpose } from '../purpose/purpose.model';
+import { PurposeService } from '../../shared/services/purpose.service';
+import { Purpose } from '../../shared/models/purpose.model';
 
 @Component({
     selector: 'purpose-list',
-    templateUrl: '../purpose/purpose-list.component.html',
-    styleUrls: ['../purpose/purpose-list.component.css']
+    templateUrl: './purpose-list.component.html',
+    styleUrls: ['./purpose-list.component.css']
 })
 export class PurposeListComponent {
 

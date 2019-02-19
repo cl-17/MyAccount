@@ -1,5 +1,5 @@
-import { User } from '../user/user.model';
-import { Purpose } from '../purpose/purpose.model';
+import { User } from './user.model';
+import { Purpose } from './purpose.model';
 
 export class Expense {
     id: number;

@@ -1,12 +1,12 @@
 import { Component, Input } from '@angular/core';
 
-import { ExpenseService } from '../expense/expense.service';
-import { Expense } from '../expense/expense.model';
+import { ExpenseService } from '../../shared/services/expense.service';
+import { Expense } from '../../shared/models/expense.model';
 
 @Component({
     selector: 'expense-list',
-    templateUrl: '../expense/expense-list.component.html',
-    styleUrls: ['../expense/expense-list.component.css']
+    templateUrl: './expense-list.component.html',
+    styleUrls: ['./expense-list.component.css']
 })
 export class ExpenseListComponent {
 

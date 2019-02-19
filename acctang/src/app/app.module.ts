@@ -1,21 +1,24 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { Injectable, NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
 import { HttpClientModule, HttpClientXsrfModule, HTTP_INTERCEPTORS, HttpInterceptor, HttpXsrfTokenExtractor, HttpRequest, HttpHandler, HttpEvent } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { MainPageComponent } from './mainpage/mainpage.component';
 import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
-import { ClassificationService } from './classification/classification.service';
-import { ClassificationListComponent } from './classification/classification-list.component';
-import { PurposeService } from './purpose/purpose.service';
-import { PurposeListComponent } from './purpose/purpose-list.component';
-import { ExpenseService } from './expense/expense.service';
-import { ExpenseListComponent } from './expense/expense-list.component';
-import { ExpenseInputComponent } from './expense/expense-input.component';
-import { IncomeService } from './income/income.service';
-import { IncomeListComponent } from './income/income-list.component';
+import { MasterMainComponent } from './master/master-main/master-main.component';
+import { ClassificationListComponent } from './master/classification-list/classification-list.component';
+import { PurposeListComponent } from './master/purpose-list/purpose-list.component';
+import { TransactionMainComponent } from './transaction/transaction-main/transaction-main.component';
+import { ExpenseListComponent } from './transaction/expense-list/expense-list.component';
+import { ExpenseInputComponent } from './transaction/expense-input/expense-input.component';
+import { IncomeListComponent } from './transaction/income-list/income-list.component';
+
+import { ClassificationService } from './shared/services/classification.service';
+import { PurposeService } from './shared/services/purpose.service';
+import { ExpenseService } from './shared/services/expense.service';
+import { IncomeService } from './shared/services/income.service';
 
 import { Observable } from 'rxjs';
 
@@ -40,9 +43,12 @@ export class HttpXsrfInterceptor implements HttpInterceptor {
 @NgModule({
   declarations: [
     AppComponent,
+    MainPageComponent,
     PagenotfoundComponent,
+    MasterMainComponent,
     ClassificationListComponent,
     PurposeListComponent,
+    TransactionMainComponent,
     ExpenseListComponent,
     ExpenseInputComponent,
     IncomeListComponent,
