@@ -24,11 +24,11 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
-    re_path(r'^admin/', admin.site.urls, name='admin'),
-    re_path(r'^master/', include('master.urls'), name='master'),
-    re_path(r'^master_api/', include(master_router.urls), name='master_router'),
-    re_path(r'^transaction_api/', include(transaction_router.urls), name='transaction_router'),
-    re_path(r'^angular/.*', TemplateView.as_view(template_name="angular_base.html")),
+    # re_path(r'^admin/', admin.site.urls, name='admin'),
+    # re_path(r'^master/', include('master.urls'), name='master'),
+    # re_path(r'^master_api/', include(master_router.urls), name='master_router'),
+    # re_path(r'^transaction_api/', include(transaction_router.urls), name='transaction_router'),
+    re_path(r'.*', TemplateView.as_view(template_name="angular_base.html")),
 ]
 
 # staticファイル用

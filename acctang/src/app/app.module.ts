@@ -1,15 +1,15 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { Injectable, NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
 import { HttpClientModule, HttpClientXsrfModule, HTTP_INTERCEPTORS, HttpInterceptor, HttpXsrfTokenExtractor, HttpRequest, HttpHandler, HttpEvent } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
-
+import { MasterMainComponent } from './master/master-main/master-main.component';
 import { ClassificationListComponent } from './master/classification-list/classification-list.component';
 import { PurposeListComponent } from './master/purpose-list/purpose-list.component';
+import { TransactionMainComponent } from './transaction/transaction-main/transaction-main.component';
 import { ExpenseListComponent } from './transaction/expense-list/expense-list.component';
 import { ExpenseInputComponent } from './transaction/expense-input/expense-input.component';
 import { IncomeListComponent } from './transaction/income-list/income-list.component';
@@ -43,6 +43,13 @@ export class HttpXsrfInterceptor implements HttpInterceptor {
   declarations: [
     AppComponent,
     PagenotfoundComponent,
+    MasterMainComponent,
+    ClassificationListComponent,
+    PurposeListComponent,
+    TransactionMainComponent,
+    ExpenseListComponent,
+    ExpenseInputComponent,
+    IncomeListComponent,
   ],
   imports: [
     BrowserModule,
