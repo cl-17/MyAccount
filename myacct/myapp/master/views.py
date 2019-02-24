@@ -75,6 +75,12 @@ class PurposeViewSet(viewsets.ModelViewSet):
         return_value['next_key'] = row[0]
         return JsonResponse(return_value)
 
+    @list_route(url_path='get-all-sub/(?P<c_id>[0-9][0-9])')
+    def get_all_sub(self, request, c_id):
+        data = Purpose.objects.filter(classification=c_id).order_by('sub_id')
+        serializer = PurposeSerializer(data, many=True)
+        return JsonResponse(serializer.data, safe=False)
+
 ############################################################################
 
 class UserViewSet(viewsets.ModelViewSet):

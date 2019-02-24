@@ -23,6 +23,14 @@ export class PurposeService {
             .catch(this.errorHandler);
     }
 
+    public getAllSub(c_id: string): Promise<Purpose[]> {
+        const url = `${this.url_purpose}get-all-sub/${c_id}/`;
+        return this.http.get(url, {headers: this.headers})
+            .toPromise()
+            .then((res) => res as Purpose[])
+            .catch(this.errorHandler);
+    }
+
     public getNewPK(c_id: string): Promise<string> {
         const url = `${this.url_purpose}get-next-key/${c_id}/`;
         return this.http.get(url, {headers: this.headers})
