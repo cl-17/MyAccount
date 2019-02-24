@@ -33,8 +33,6 @@ export class ExpenseListComponent {
             .then(res => this.expenses = res);
         this.classificationService.getAll()
             .then(res => this.classifications = res);
-        this.purposeService.getAll()
-            .then(res => this.purposes = res);
     }
 
     onSelect(expense: Expense): void {
@@ -66,6 +64,11 @@ export class ExpenseListComponent {
                 this.expenses[index] = res;
                 this.selected = res;
             });
+    }
+
+    onChange(c_id: string): void {
+        this.purposeService.getAllSub(c_id)
+            .then(res => this.purposes = res);
     }
 
 }

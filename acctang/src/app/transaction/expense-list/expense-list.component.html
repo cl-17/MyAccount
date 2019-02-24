@@ -6,7 +6,7 @@
           type="date"
           placeholder="date"
         >
-<select [(ngModel)]="added.classification_id">
+<select [(ngModel)]="added.classification_id" (change)="onChange(added.classification_id)">
   <option *ngFor="let classification of classifications"
       [ngValue]="classification.id">
       {{classification.name}}
