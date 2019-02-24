@@ -26,7 +26,7 @@ class ExpenseViewSet(viewsets.ModelViewSet):
 
     @list_route(url_path='get-all')
     def get_all(self, request):
-        data = Expense.objects.all().order_by('id')
+        data = Expense.objects.all().order_by('date').reverse()[:50]
         serializer = ExpenseSerializer(data, many=True)
         return JsonResponse(serializer.data, safe=False)
 
