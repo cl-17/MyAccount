@@ -2,6 +2,10 @@ import { Component, Input } from '@angular/core';
 
 import { ExpenseService } from '../../shared/services/expense.service';
 import { Expense } from '../../shared/models/expense.model';
+import { ClassificationService } from '../../shared/services/classification.service';
+import { Classification } from '../../shared/models/classification.model';
+import { PurposeService } from '../../shared/services/purpose.service';
+import { Purpose } from '../../shared/models/purpose.model';
 
 @Component({
     selector: 'expense-list',
@@ -11,6 +15,8 @@ import { Expense } from '../../shared/models/expense.model';
 export class ExpenseListComponent {
 
     title: string = '＜支出一覧＞';
+    classifications: Classification[];
+    purposes: Purpose[];
     expenses: Expense[];
     selected: Expense;
     
@@ -18,11 +24,17 @@ export class ExpenseListComponent {
 
     constructor(
         private expenseService: ExpenseService,
+        private classificationService: ClassificationService,
+        private purposeService: PurposeService,
     ){}
     
     ngOnInit(): void {
         this.expenseService.getAll()
             .then(res => this.expenses = res);
+        this.classificationService.getAll()
+            .then(res => this.classifications = res);
+        this.purposeService.getAll()
+            .then(res => this.purposes = res);
     }
 
     onSelect(expense: Expense): void {

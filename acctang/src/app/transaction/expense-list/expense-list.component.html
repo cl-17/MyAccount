@@ -6,16 +6,18 @@
           type="date"
           placeholder="date"
         >
-<input [(ngModel)]="added.classification_id"
-          type="text"
-          length=2
-          placeholder="c_id"
-        >
-<input [(ngModel)]="added.sub_id"
-          type="text"
-          length=2
-          placeholder="sub_id"
-        >
+<select [(ngModel)]="added.classification_id">
+  <option *ngFor="let classification of classifications"
+      [ngValue]="classification.id">
+      {{classification.name}}
+  </option>
+</select>
+<select [(ngModel)]="added.sub_id">
+  <option *ngFor="let purpose of purposes"
+      [ngValue]="purpose.sub_id">
+      {{purpose.name}}
+  </option>
+</select>
 <input [(ngModel)]="added.ammount"
           type="number"
           placeholder="ammount"
