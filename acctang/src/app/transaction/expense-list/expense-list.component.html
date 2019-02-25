@@ -40,10 +40,34 @@
 
 <div *ngIf="selected">
   <h2>Details</h2>
-  <div><span>c_id: </span>{{ selected.purpose.classification.id }}</div>
-  <div><span>c_name: </span>{{ selected.purpose.classification.name }}</div>
-  <div><span>sub_id: </span>{{ selected.purpose.sub_id }}</div>
-  <div><span>sub_name: </span>{{ selected.purpose.name }}</div>
+  <div>
+    <label>date:
+      <input [(ngModel)]="selected.date"
+              type="date"
+              placeholder="date"
+            >
+    </label>
+  </div>
+  <div>
+    <label>c_id:
+      <select [(ngModel)]="selected.purpose.classification.id" (change)="onChange_update(selected.purpose.classification.id)">
+        <option *ngFor="let classification of classifications"
+            [ngValue]="classification.id">
+            {{classification.name}}
+        </option>
+      </select>
+    </label>
+  </div>
+  <div>
+    <label>sub_id:
+      <select [(ngModel)]="selected.purpose.sub_id">
+        <option *ngFor="let purpose of purposes_update"
+            [ngValue]="purpose.sub_id">
+            {{purpose.name}}
+        </option>
+      </select>
+    </label>
+  </div>
   <div>
     <label>ammount:
       <input [(ngModel)]="selected.ammount"
@@ -53,7 +77,14 @@
       >
     </label>
   </div>
-  <div><span>credit: </span>{{ selected.credit }}</div>
+  <div>
+    <label>credit: 
+      <input [(ngModel)]="selected.credit"
+      type="checkbox"
+      [checked]="selected.credit"
+      >
+    </label>
+  </div>
   <button (click)="onUpdate(selected)">Update</button>
   <button (click)="onDelete(selected)">Delete</button>
 </div>

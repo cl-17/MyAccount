@@ -17,6 +17,7 @@ export class ExpenseListComponent {
     title: string = '＜支出一覧＞';
     classifications: Classification[];
     purposes: Purpose[];
+    purposes_update: Purpose[];
     expenses: Expense[];
     selected: Expense;
     
@@ -37,6 +38,7 @@ export class ExpenseListComponent {
 
     onSelect(expense: Expense): void {
         this.selected = expense;
+        this.onChange_update(expense.purpose.classification.id);
     }
 
     onAdd(): void {
@@ -69,6 +71,11 @@ export class ExpenseListComponent {
     onChange(c_id: string): void {
         this.purposeService.getAllSub(c_id)
             .then(res => this.purposes = res);
+    }
+
+    onChange_update(c_id: string): void {
+        this.purposeService.getAllSub(c_id)
+            .then(res => this.purposes_update = res);
     }
 
 }
