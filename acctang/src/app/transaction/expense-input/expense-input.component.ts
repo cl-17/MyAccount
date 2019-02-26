@@ -30,21 +30,21 @@ export class ExpenseInputComponent {
     }
 
     onInputCSV() {
-        let inputData:InputExpense[] = [];
+        let csvData:InputExpense[] = [];
         let temp = this.readText.split('\r\n');
         temp.forEach((element,index) => {
-            let xxx = element.split(',', 5);
+            let inputData = element.split(',', 5);
             let rowData = new InputExpense;
-            rowData.date = xxx[0];
-            rowData.c_name = xxx[1];
-            rowData.p_name = xxx[2];
-            rowData.ammount = xxx[3];
-            rowData.credit = xxx[4];
+            rowData.date = inputData[0];
+            rowData.c_name = inputData[1];
+            rowData.p_name = inputData[2];
+            rowData.ammount = inputData[3];
+            rowData.credit = inputData[4];
             if (rowData.date != '') {
-                inputData[index] = rowData
+                csvData[index] = rowData
             }
         });
-        this.expenseService.inputCSV(inputData);
+        this.expenseService.inputCSV(csvData);
         this.readText = '';
     }
 

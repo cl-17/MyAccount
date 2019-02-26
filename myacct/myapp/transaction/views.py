@@ -49,24 +49,25 @@ class ExpenseViewSet(viewsets.ModelViewSet):
         if id is None:
             id = 0
 
-        for xxx in request.data:
+        for rowData in request.data:
             # idのカウントアップ
             id += 1
-            xxx['id'] = id
+            rowData['id'] = id
 
             # creditの値が'*'なら、Trueに変換
-            if xxx['credit'] == '*':
-                xxx['credit'] = True
+            if ('credit' in rowData) and rowData['credit'] == '*':
+                rowData['credit'] = True
             else:
-                xxx['credit'] = False
+                rowData['credit'] = False
 
             # ammountを数値型に変換
-            xxx['ammount'] = int(xxx['ammount'])
+            rowData['ammount'] = int(rowData['ammount'])
             
-            # c_name、p_nameからpurpose_idへの変換
-            classification = Classification.objects.get(name=xxx['c_name'])
-            purpose = Purpose.objects.get(name=xxx['p_name'],classification=classification)
-            xxx['purpose_id'] = purpose.id
+            # c_name、p_nameからclassification_id、sub_idへの変換
+            classification = Classification.objects.get(name=rowData['c_name'])
+            purpose = Purpose.objects.get(name=rowData['p_name'],classification=classification)
+            rowData['classification_id'] = classification.id
+            rowData['sub_id'] = purpose.sub_id
 
         serializer = ExpenseSerializer(data=request.data, many=True)
 
@@ -74,12 +75,10 @@ class ExpenseViewSet(viewsets.ModelViewSet):
             serializer.save()
             headers = self.get_success_headers(serializer.data)
             data = list(serializer.data)
-            output_log('good end')
             return Response(data,
                             status=status.HTTP_201_CREATED,
                             headers=headers)
         else:
-            output_log('bad end')
             return Response(serializer.errors,
                             status=status.HTTP_400_BAD_REQUEST)
 
