@@ -38,7 +38,9 @@ export class ExpenseListComponent {
 
     onSelect(expense: Expense): void {
         this.selected = expense;
-        this.onChange_update(expense.purpose.classification.id);
+        this.selected.classification_id = this.selected.purpose.classification.id
+        this.selected.sub_id = this.selected.purpose.sub_id
+        this.onChange_update(this.selected.classification_id);
     }
 
     onAdd(): void {

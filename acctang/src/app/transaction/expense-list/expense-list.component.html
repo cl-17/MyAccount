@@ -50,7 +50,7 @@
   </div>
   <div>
     <label>c_id:
-      <select [(ngModel)]="selected.purpose.classification.id" (change)="onChange_update(selected.purpose.classification.id)">
+      <select [(ngModel)]="selected.classification_id" (change)="onChange_update(selected.classification_id)">
         <option *ngFor="let classification of classifications"
             [ngValue]="classification.id">
             {{classification.name}}
@@ -60,7 +60,7 @@
   </div>
   <div>
     <label>sub_id:
-      <select [(ngModel)]="selected.purpose.sub_id">
+      <select [(ngModel)]="selected.sub_id">
         <option *ngFor="let purpose of purposes_update"
             [ngValue]="purpose.sub_id">
             {{purpose.name}}
