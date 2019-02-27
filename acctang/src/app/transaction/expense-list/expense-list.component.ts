@@ -47,7 +47,7 @@ export class ExpenseListComponent {
         this.expenseService.create(this.added)
             .then(res => {
                 this.expenses.push(res);
-                this.selected = res;
+                this.onSelect(res);
                 this.added = new Expense();
             });
     }
@@ -66,7 +66,7 @@ export class ExpenseListComponent {
         this.expenseService.update(expense)
             .then(res => {
                 this.expenses[index] = res;
-                this.selected = res;
+                this.onSelect(res);
             });
     }
 
