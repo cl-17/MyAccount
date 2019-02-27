@@ -60,3 +60,21 @@ class ExpenseSerializer(ModelSerializer):
         expense = Expense.objects.create(**validated_data)
         return expense
 
+    def update(self, instance, validated_data):
+
+        classification_id = validated_data.get('classification_id', None)
+        sub_id = validated_data.get('sub_id', None)
+        purpose_id = classification_id + sub_id
+        instance.purpose = Purpose.objects.get(pk=purpose_id)
+        if instance.purpose is None:
+            raise serializers.VilidationError('purpose not found.')
+        del validated_data['classification_id']
+        del validated_data['sub_id']
+
+        instance.date = validated_data.get('date', instance.date)
+        instance.ammount = validated_data.get('ammount', instance.ammount)
+        instance.credit = validated_data.get('credit', instance.credit)
+
+        instance.save()
+        return instance
+
