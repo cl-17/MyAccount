@@ -2,31 +2,60 @@
 
 <br>
 
-<input [(ngModel)]="added.date"
-          type="date"
-          placeholder="date"
+<form #expenseCheck="ngForm" class="inputCheck">
+  <input [(ngModel)]="added.date"
+            type="date"
+            class="input_date"
+            name="input_expense_date"
+            placeholder="date"
+            #inputExpenseInfo="ngModel"
+            required
+          >
+  <select [(ngModel)]="added.classification_id"
+            class="input_select"
+            name="input_expense_classification_id"
+            #inputExpenseInfo="ngModel"
+            required
+            (change)="onChange(added.classification_id)"
+            >
+    <option *ngFor="let classification of classifications"
+        [ngValue]="classification.id">
+        {{classification.name}}
+    </option>
+  </select>
+  <select [(ngModel)]="added.sub_id"
+            class="input_select"
+            name="input_expense_sub_id"
+            #inputExpenseInfo="ngModel"
+            required
+            >
+    <option *ngFor="let purpose of purposes"
+        [ngValue]="purpose.sub_id">
+        {{purpose.name}}
+    </option>
+  </select>
+  <input [(ngModel)]="added.ammount"
+            type="number"
+            class="input_number"
+            name="input_expense_ammount"
+            placeholder="ammount"
+            #inputExpenseInfo="ngModel"
+            required
+          >
+  <input [(ngModel)]="added.credit"
+            type="checkbox"
+            class="input_checkbox"
+            name="input_expense_credit"
+            [checked]="added.credit"
+          >
+  <input type="button" 
+          class="input_button"
+          name="input_ok"
+          value="Add"
+          (click)="onAdd()" 
+          [disabled]="expenseCheck.invalid"
         >
-<select [(ngModel)]="added.classification_id" (change)="onChange(added.classification_id)">
-  <option *ngFor="let classification of classifications"
-      [ngValue]="classification.id">
-      {{classification.name}}
-  </option>
-</select>
-<select [(ngModel)]="added.sub_id">
-  <option *ngFor="let purpose of purposes"
-      [ngValue]="purpose.sub_id">
-      {{purpose.name}}
-  </option>
-</select>
-<input [(ngModel)]="added.ammount"
-          type="number"
-          placeholder="ammount"
-        >
-<input [(ngModel)]="added.credit"
-          type="checkbox"
-          [checked]="added.credit"
-        >
-<button (click)="onAdd()">Add</button>
+</form>
 
 <br>
 
