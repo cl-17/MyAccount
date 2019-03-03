@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.db.models import Max, Subquery, OuterRef
+from django.db.models import Max, Subquery, OuterRef, F
 from django.http import JsonResponse
 
 from rest_framework import viewsets
@@ -87,14 +87,16 @@ class ExpenseViewSet(viewsets.ModelViewSet):
 
     @list_route(url_path='get-pandas-result')
     def get_pandas_result(self, request):
-        expense_data = Expense.objects.values(
-                'date', 'ammount', 'credit', 'purpose__name', 'purpose__classification__name'
+        expense_data = Expense.objects.annotate(
+                p_name=F('purpose__name'), c_name=F('purpose__classification__name')
+            ).values(
+                'date', 'ammount', 'credit', 'p_name', 'c_name'
             )
         output_log(expense_data.query)
         df_expense_data = read_frame(expense_data)
 
         df_expense_data.reset_index(drop=True,inplace=True)
-        valiables = ['date', 'purpose__classification__name', 'purpose__name', 'ammount', 'credit']
+        valiables = ['date', 'c_name', 'p_name', 'ammount', 'credit']
         result = df_expense_data[valiables].to_html()
 
         return Response(result)
