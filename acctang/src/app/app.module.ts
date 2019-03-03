@@ -13,6 +13,7 @@ import { PurposeListComponent } from './master/purpose-list/purpose-list.compone
 import { TransactionMainComponent } from './transaction/transaction-main/transaction-main.component';
 import { ExpenseListComponent } from './transaction/expense-list/expense-list.component';
 import { ExpenseInputComponent } from './transaction/expense-input/expense-input.component';
+import { ExpenseAnalysisComponent } from './transaction/expense-analysis/expense-analysis.component';
 import { IncomeListComponent } from './transaction/income-list/income-list.component';
 
 import { ClassificationService } from './shared/services/classification.service';
@@ -51,6 +52,7 @@ export class HttpXsrfInterceptor implements HttpInterceptor {
     TransactionMainComponent,
     ExpenseListComponent,
     ExpenseInputComponent,
+    ExpenseAnalysisComponent,
     IncomeListComponent,
   ],
   imports: [

@@ -9,6 +9,7 @@ import { PurposeListComponent } from './master/purpose-list/purpose-list.compone
 import { TransactionMainComponent } from './transaction/transaction-main/transaction-main.component';
 import { ExpenseListComponent } from './transaction/expense-list/expense-list.component';
 import { ExpenseInputComponent } from './transaction/expense-input/expense-input.component';
+import { ExpenseAnalysisComponent } from './transaction/expense-analysis/expense-analysis.component';
 
 const routes: Routes = [
   { path: 'angular', component: MainPageComponent },
@@ -22,6 +23,7 @@ const routes: Routes = [
     children: [
       { path: 'expense-list', component: ExpenseListComponent },
       { path: 'expense-input', component: ExpenseInputComponent },
+      { path: 'expense-analysis', component: ExpenseAnalysisComponent },
     ]
   },
   { path: '**', component: PagenotfoundComponent },
