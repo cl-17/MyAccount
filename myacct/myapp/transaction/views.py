@@ -11,6 +11,9 @@ from master.models import Classification, Purpose
 from transaction.models import Expense
 from transaction.serializer import ExpenseSerializer
 
+import pandas as pd
+from django_pandas.io import read_frame
+
 from myapp.common import output_log, output_log_dict
 
 ############################################################################
@@ -82,6 +85,12 @@ class ExpenseViewSet(viewsets.ModelViewSet):
             return Response(serializer.errors,
                             status=status.HTTP_400_BAD_REQUEST)
 
+    @list_route(url_path='get-pandas-result')
+    def get_pandas_result(self, request):
+        expense_data = Expense.objects.all()
+        df_expense_data = read_frame(expense_data)
+        result = df_expense_data.to_html()
+        return Response(result)
 
 ############################################################################
 
