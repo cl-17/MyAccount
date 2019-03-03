@@ -89,7 +89,11 @@ class ExpenseViewSet(viewsets.ModelViewSet):
     def get_pandas_result(self, request):
         expense_data = Expense.objects.all()
         df_expense_data = read_frame(expense_data)
-        result = df_expense_data.to_html()
+
+        df_expense_data_r = df_expense_data.reset_index()
+        valiables = ['date', 'purpose', 'ammount', 'credit']
+
+        result = df_expense_data_r[valiables].to_html()
         return Response(result)
 
 ############################################################################
