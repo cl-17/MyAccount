@@ -17,6 +17,7 @@ export class ExpenseListComponent {
     title: string = '＜支出一覧＞';
     classifications: Classification[];
     purposes: Purpose[];
+    purposes_update: Purpose[];
     expenses: Expense[];
     selected: Expense;
     
@@ -37,13 +38,16 @@ export class ExpenseListComponent {
 
     onSelect(expense: Expense): void {
         this.selected = expense;
+        this.selected.classification_id = this.selected.purpose.classification.id
+        this.selected.sub_id = this.selected.purpose.sub_id
+        this.onChange_update(this.selected.classification_id);
     }
 
     onAdd(): void {
         this.expenseService.create(this.added)
             .then(res => {
                 this.expenses.push(res);
-                this.selected = res;
+                this.onSelect(res);
                 this.added = new Expense();
             });
     }
@@ -62,13 +66,18 @@ export class ExpenseListComponent {
         this.expenseService.update(expense)
             .then(res => {
                 this.expenses[index] = res;
-                this.selected = res;
+                this.onSelect(res);
             });
     }
 
     onChange(c_id: string): void {
         this.purposeService.getAllSub(c_id)
             .then(res => this.purposes = res);
+    }
+
+    onChange_update(c_id: string): void {
+        this.purposeService.getAllSub(c_id)
+            .then(res => this.purposes_update = res);
     }
 
 }

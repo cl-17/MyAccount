@@ -2,31 +2,60 @@
 
 <br>
 
-<input [(ngModel)]="added.date"
-          type="date"
-          placeholder="date"
+<form #expenseCheck="ngForm" class="inputCheck">
+  <input [(ngModel)]="added.date"
+            type="date"
+            class="input_date"
+            name="input_expense_date"
+            placeholder="date"
+            #inputExpenseInfo="ngModel"
+            required
+          >
+  <select [(ngModel)]="added.classification_id"
+            class="input_select"
+            name="input_expense_classification_id"
+            #inputExpenseInfo="ngModel"
+            required
+            (change)="onChange(added.classification_id)"
+            >
+    <option *ngFor="let classification of classifications"
+        [ngValue]="classification.id">
+        {{classification.name}}
+    </option>
+  </select>
+  <select [(ngModel)]="added.sub_id"
+            class="input_select"
+            name="input_expense_sub_id"
+            #inputExpenseInfo="ngModel"
+            required
+            >
+    <option *ngFor="let purpose of purposes"
+        [ngValue]="purpose.sub_id">
+        {{purpose.name}}
+    </option>
+  </select>
+  <input [(ngModel)]="added.ammount"
+            type="number"
+            class="input_number"
+            name="input_expense_ammount"
+            placeholder="ammount"
+            #inputExpenseInfo="ngModel"
+            required
+          >
+  <input [(ngModel)]="added.credit"
+            type="checkbox"
+            class="input_checkbox"
+            name="input_expense_credit"
+            [checked]="added.credit"
+          >
+  <input type="button" 
+          class="input_button"
+          name="input_ok"
+          value="Add"
+          (click)="onAdd()" 
+          [disabled]="expenseCheck.invalid"
         >
-<select [(ngModel)]="added.classification_id" (change)="onChange(added.classification_id)">
-  <option *ngFor="let classification of classifications"
-      [ngValue]="classification.id">
-      {{classification.name}}
-  </option>
-</select>
-<select [(ngModel)]="added.sub_id">
-  <option *ngFor="let purpose of purposes"
-      [ngValue]="purpose.sub_id">
-      {{purpose.name}}
-  </option>
-</select>
-<input [(ngModel)]="added.ammount"
-          type="number"
-          placeholder="ammount"
-        >
-<input [(ngModel)]="added.credit"
-          type="checkbox"
-          [checked]="added.credit"
-        >
-<button (click)="onAdd()">Add</button>
+</form>
 
 <br>
 
@@ -40,10 +69,34 @@
 
 <div *ngIf="selected">
   <h2>Details</h2>
-  <div><span>c_id: </span>{{ selected.purpose.classification.id }}</div>
-  <div><span>c_name: </span>{{ selected.purpose.classification.name }}</div>
-  <div><span>sub_id: </span>{{ selected.purpose.sub_id }}</div>
-  <div><span>sub_name: </span>{{ selected.purpose.name }}</div>
+  <div>
+    <label>date:
+      <input [(ngModel)]="selected.date"
+              type="date"
+              placeholder="date"
+            >
+    </label>
+  </div>
+  <div>
+    <label>c_id:
+      <select [(ngModel)]="selected.classification_id" (change)="onChange_update(selected.classification_id)">
+        <option *ngFor="let classification of classifications"
+            [ngValue]="classification.id">
+            {{classification.name}}
+        </option>
+      </select>
+    </label>
+  </div>
+  <div>
+    <label>sub_id:
+      <select [(ngModel)]="selected.sub_id">
+        <option *ngFor="let purpose of purposes_update"
+            [ngValue]="purpose.sub_id">
+            {{purpose.name}}
+        </option>
+      </select>
+    </label>
+  </div>
   <div>
     <label>ammount:
       <input [(ngModel)]="selected.ammount"
@@ -53,7 +106,14 @@
       >
     </label>
   </div>
-  <div><span>credit: </span>{{ selected.credit }}</div>
+  <div>
+    <label>credit: 
+      <input [(ngModel)]="selected.credit"
+      type="checkbox"
+      [checked]="selected.credit"
+      >
+    </label>
+  </div>
   <button (click)="onUpdate(selected)">Update</button>
   <button (click)="onDelete(selected)">Delete</button>
 </div>
