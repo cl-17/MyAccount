@@ -13,6 +13,7 @@ from transaction.serializer import ExpenseSerializer
 
 import pandas as pd
 from django_pandas.io import read_frame
+import matplotlib.pyplot as plt
 
 from myapp.common import output_log, output_log_dict
 
@@ -87,16 +88,23 @@ class ExpenseViewSet(viewsets.ModelViewSet):
 
     @list_route(url_path='get-pandas-result')
     def get_pandas_result(self, request):
+
+        # 支出のデータを取得
         expense_data = Expense.objects.annotate(
                 p_name=F('purpose__name'), c_name=F('purpose__classification__name')
             ).values(
                 'date', 'ammount', 'credit', 'p_name', 'c_name'
             )
-        output_log(expense_data.query)
-        df_expense_data = read_frame(expense_data)
 
-        df_expense_data.reset_index(drop=True,inplace=True)
+        # ModelのデータからDataFrameを読み込む
+        df_expense_data = read_frame(expense_data)
+        # index列を振りなおす（dropは元の列を削除するか、inplaceは結果を戻り値にするか上書きするか）
+        df_expense_data.reset_index(drop=True, inplace=True)
+        # date列をobject型からdatetime64[ns]型に変換して上書き
+        df_expense_data['date'] = pd.to_datetime(df_expense_data['date'])
+        # 表示する列の絞り込みと順番の指定
         valiables = ['date', 'c_name', 'p_name', 'ammount', 'credit']
+        # 結果をhtml化して返却
         result = df_expense_data[valiables].to_html()
 
         return Response(result)
