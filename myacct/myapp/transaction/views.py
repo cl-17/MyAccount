@@ -109,8 +109,12 @@ class ExpenseViewSet(viewsets.ModelViewSet):
         df_expense_data['month'] = df_expense_data['date'].dt.month
         df_expense_data['year'] = df_expense_data['date'].dt.year
 
-        # 年月、用途、目的ごとに金額の合計と件数を集計
-        df_expense_data_sum = df_expense_data.groupby(['year', 'month', 'c_name', 'p_name', 'credit'], as_index=False).agg({'ammount':['sum', 'count']})
+        # 年月、目的ごとに金額の合計と件数を集計
+        df_expense_data_sum = df_expense_data.groupby(['year', 'month', 'c_name']).agg({'ammount':['sum', 'count']})
+
+        # 以下、条件違いでの集計の処理
+        # 年月、目的、用途、クレジットごとに金額の合計と件数を集計
+        # df_expense_data_sum = df_expense_data.groupby(['year', 'month', 'c_name', 'p_name', 'credit'], as_index=False).agg({'ammount':['sum', 'count']})
 
         # 結果をhtml化して返却
         result = df_expense_data_sum.to_html()
