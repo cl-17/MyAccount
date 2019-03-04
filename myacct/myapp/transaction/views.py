@@ -98,12 +98,20 @@ class ExpenseViewSet(viewsets.ModelViewSet):
 
         # ModelのデータからDataFrameを読み込む
         df_expense_data = read_frame(expense_data)
+
         # index列を振りなおす（dropは元の列を削除するか、inplaceは結果を戻り値にするか上書きするか）
         df_expense_data.reset_index(drop=True, inplace=True)
+
         # date列をobject型からdatetime64[ns]型に変換して上書き
         df_expense_data['date'] = pd.to_datetime(df_expense_data['date'])
+
+        # date列から年月を抽出して列に追加
+        df_expense_data['month'] = df_expense_data['date'].dt.month
+        df_expense_data['year'] = df_expense_data['date'].dt.year
+
         # 表示する列の絞り込みと順番の指定
-        valiables = ['date', 'c_name', 'p_name', 'ammount', 'credit']
+        valiables = ['year', 'month', 'date', 'c_name', 'p_name', 'ammount', 'credit']
+        
         # 結果をhtml化して返却
         result = df_expense_data[valiables].to_html()
 
