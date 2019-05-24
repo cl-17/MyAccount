@@ -69,6 +69,14 @@ export class ExpenseService {
             .catch(this.errorHandler);
     }
 
+    public getPandasResult(): Promise<string> {
+        const url = `${this.url_expense}get-pandas-result/`;
+        return this.http.get(url, {headers: this.headers})
+            .toPromise()
+            .then((res) => res as string)
+            .catch(this.errorHandler);
+    }
+
     private errorHandler(err) {
         console.log('Error occured.', err);
         return Promise.reject(err.message || err);

@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.db.models import Max
+from django.db.models import Max, Subquery, OuterRef, F
 from django.http import JsonResponse
 
 from rest_framework import viewsets
@@ -10,6 +10,11 @@ from rest_framework.decorators import list_route
 from master.models import Classification, Purpose
 from transaction.models import Expense
 from transaction.serializer import ExpenseSerializer
+
+import pandas as pd
+from django_pandas.io import read_frame
+import matplotlib.pyplot as plt
+import numpy as np
 
 from myapp.common import output_log, output_log_dict
 
@@ -82,6 +87,61 @@ class ExpenseViewSet(viewsets.ModelViewSet):
             return Response(serializer.errors,
                             status=status.HTTP_400_BAD_REQUEST)
 
+    @list_route(url_path='get-pandas-result')
+    def get_pandas_result(self, request):
+
+        # 支出のデータを取得
+        expense_data = Expense.objects.annotate(
+                p_name=F('purpose__name'), c_name=F('purpose__classification__name')
+            ).values(
+                'date', 'ammount', 'credit', 'p_name', 'c_name'
+            )
+
+        # ModelのデータからDataFrameを読み込む
+        df_expense_data = read_frame(expense_data)
+
+        # index列を振りなおす（dropは元の列を削除するか、inplaceは結果を戻り値にするか上書きするか）
+        df_expense_data.reset_index(drop=True, inplace=True)
+
+        # date列をobject型からdatetime64[ns]型に変換して上書き
+        df_expense_data['date'] = pd.to_datetime(df_expense_data['date'])
+        # ammount列をobject型からint64型に変換して上書き
+        df_expense_data['ammount'] = df_expense_data['ammount'].astype(np.int64)
+
+        # date列から年月を抽出して列に追加
+        df_expense_data['month'] = df_expense_data['date'].dt.month
+        df_expense_data['year'] = df_expense_data['date'].dt.year
+
+        # 表用に年月、目的ごとに金額の合計と件数を集計
+        df_expense_data_table = df_expense_data.groupby(['year', 'month', 'c_name']).agg({'ammount':['sum', 'count']})
+
+        # 以下、条件違いでの集計の処理
+        # 年月、目的、用途、クレジットごとに金額の合計と件数を集計
+        # df_expense_data_table = df_expense_data.groupby(['year', 'month', 'c_name', 'p_name', 'credit'], as_index=False).agg({'ammount':['sum', 'count']})
+
+        # グラフ用に年月ごとに金額の合計を集計
+        max_year = df_expense_data['year'].max()
+        df_expense_data_max_year = df_expense_data[(df_expense_data['year'] == max_year) | (df_expense_data['year'] == max_year - 1)]
+        df_expense_data_fig = df_expense_data_max_year.groupby(['year', 'month']).ammount.sum()
+
+        # 結果をhtml化
+        result = df_expense_data_table.to_html()
+
+        # 結果をグラフにして保存
+        plt.figure()
+        df_expense_data_fig.plot(kind='bar')
+        plt.savefig('myapp/static/fig/pandas_result_fig.png')
+        plt.close('all')
+
+        # ※以下、集計していない場合の表示順を変更して表示する処理
+        # 表示する列の絞り込みと順番の指定
+        # valiables = ['year', 'month', 'date', 'c_name', 'p_name', 'ammount', 'credit']
+
+        # 結果をhtml化
+        # result = df_expense_data[valiables].to_html()
+
+        return Response(result)
 
 ############################################################################
+
 
