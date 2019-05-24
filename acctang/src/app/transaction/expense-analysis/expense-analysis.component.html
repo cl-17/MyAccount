@@ -1,0 +1,18 @@
+<h1>{{ title | uppercase }}</h1>
+
+<br>
+
+<button (click)="onClick()">表示</button>
+
+<br>
+
+<p>以下、Pandasの結果</p>
+<img *ngIf="expressImg" src="/static/fig/pandas_result_fig.png" onerror="onImgError(this);">
+<br>
+<br>
+<p [innerHTML]="pandasResult"></p>
+
+<br>
+
+<p>終わり</p>
+

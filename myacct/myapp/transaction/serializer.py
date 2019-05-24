@@ -22,11 +22,6 @@ class ExpenseSerializer(ModelSerializer):
         write_only = True,
         required = False,
     )
-    purpose_id = serializers.PrimaryKeyRelatedField(
-        queryset = Purpose.objects.all(),
-        write_only = True,
-        required = False,
-    )
     purpose = PurposeSerializer(
         read_only = True,
     )
@@ -46,7 +41,6 @@ class ExpenseSerializer(ModelSerializer):
             'date',
             'classification_id',
             'sub_id',
-            'purpose_id',
             'purpose',
             'ammount',
             'credit',
@@ -54,22 +48,33 @@ class ExpenseSerializer(ModelSerializer):
 
     def create(self, validated_data):
 
-        output_log('create start!!!!!')
-
-        validated_data['purpose'] = validated_data.get('purpose_id', None)
+        classification_id = validated_data.get('classification_id', None)
+        sub_id = validated_data.get('sub_id', None)
+        purpose_id = classification_id + sub_id
+        validated_data['purpose'] = Purpose.objects.get(pk=purpose_id)
         if validated_data['purpose'] is None:
-            output_log('purpose is None!!!!!')
-            purpose_id = validated_data.get('classification_id', None) + validated_data.get('sub_id', None)
-            output_log('purpose_id is ' + purpose_id)
-            validated_data['purpose'] = Purpose.objects.get(pk=purpose_id)
-            if validated_data['purpose'] is None:
-                raise serializers.VilidationError('purpose not found.')
-            else:
-                del validated_data['classification_id']
-                del validated_data['sub_id']
-        else:
-            del validated_data['purpose_id']
+            raise serializers.VilidationError('purpose not found.')
+        del validated_data['classification_id']
+        del validated_data['sub_id']
 
         expense = Expense.objects.create(**validated_data)
         return expense
+
+    def update(self, instance, validated_data):
+
+        classification_id = validated_data.get('classification_id', None)
+        sub_id = validated_data.get('sub_id', None)
+        purpose_id = classification_id + sub_id
+        instance.purpose = Purpose.objects.get(pk=purpose_id)
+        if instance.purpose is None:
+            raise serializers.VilidationError('purpose not found.')
+        del validated_data['classification_id']
+        del validated_data['sub_id']
+
+        instance.date = validated_data.get('date', instance.date)
+        instance.ammount = validated_data.get('ammount', instance.ammount)
+        instance.credit = validated_data.get('credit', instance.credit)
+
+        instance.save()
+        return instance
 
