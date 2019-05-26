@@ -4,11 +4,11 @@ import { ExpenseService } from '../../shared/services/expense.service';
 import { InputExpense } from '../../shared/models/expense.model';
 
 @Component({
-    selector: 'expense-input',
-    templateUrl: './expense-input.component.html',
-    styleUrls: ['./expense-input.component.css']
+    selector: 'expense-input-csv',
+    templateUrl: './expense-input-csv.component.html',
+    styleUrls: ['./expense-input-csv.component.css']
 })
-export class ExpenseInputComponent {
+export class ExpenseInputCsvComponent {
 
     title: string = '＜支出取込＞';
     readText: string;
