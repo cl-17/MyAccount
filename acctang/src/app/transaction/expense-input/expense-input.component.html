@@ -1,2 +1,45 @@
-<h1>{{ title | uppercase }}</h1>
+<form #expenseCheck="ngForm" class="inputCheck">
+    <input [(ngModel)]="input_data.date"
+            type="date"
+            #inputExpenseInfo="ngModel"
+            required>
+    <select [(ngModel)]="input_data.classification_id"
+            #inputExpenseInfo="ngModel"
+            required
+            (change)="onChange(input_data.classification_id)">
+        <option *ngFor="let classification of classifications"
+            [ngValue]="classification.id">
+            {{classification.name}}
+        </option>   
+    </select>
+    <select [(ngModel)]="input_data.sub_id"
+        #inputExpenseInfo="ngModel"
+        required>
+        <option *ngFor="let purpose of purposes"
+            [ngValue]="purpose.sub_id">
+            {{purpose.name}}
+        </option>
+    </select>
+    <input [(ngModel)]="input_data.ammount"
+        type="number"
+        placeholder="ammount"
+        #inputExpenseInfo="ngModel"
+        required>
+    <input [(ngModel)]="input_data.credit"
+        type="checkbox"
+        [checked]="input_data.credit">
+
+    <input type="button" 
+        value="登録"
+        (click)="onClickAdd()" 
+        [disabled]="inputCheck.invalidAdd">
+    <input type="button" 
+        value="更新"
+        (click)="onClickUpdate()" 
+        [disabled]="inputCheck.invalidUpdate">
+    <input type="button" 
+        value="削除"
+        (click)="onClickDelete()" 
+        [disabled]="inputCheck.invalidDelete">
+</form>
 
