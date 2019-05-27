@@ -17,16 +17,17 @@ export class ExpenseService {
 
     public getAll(): Promise<Expense[]> {
         const url = `${this.url_expense}get-all/`;
+        let result: Expense[];
         return this.http.get(url, {headers: this.headers})
             .toPromise()
             .then((res) => {
-                res as Expense[]
-                res.forEach(element => {
+                result = res as Expense[]
+                result.forEach(element => {
                     element.classification_id = element.purpose.classification.id
                     element.sub_id = element.purpose.sub_id;
                 })
-                return res;
-                })
+                return result
+            })
             .catch(this.errorHandler);
     }
 
