@@ -62,6 +62,7 @@ export class ExpenseInputComponent {
     onChange(c_id: string): void {
         this.purposeService.getAllSub(c_id)
             .then(res => this.purposes = res);
+        this.input_data.sub_id = null;
     }
 
 }
