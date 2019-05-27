@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 import { ExpenseService } from '../../shared/services/expense.service';
-
+import { Expense } from '../../shared/models/expense.model';
 
 @Component({
     selector: 'expense-search',
@@ -10,7 +10,8 @@ import { ExpenseService } from '../../shared/services/expense.service';
 })
 export class ExpenseSearchComponent {
 
-    title: string = '＜＞';
+    title: string = '＜支出検索＞';
+    searchResult: Expense[];
 
     constructor(
         private expenseService: ExpenseService,
@@ -18,6 +19,11 @@ export class ExpenseSearchComponent {
     }
     
     ngOnInit(): void {
+    }
+
+    onClickSearch(): void {
+        this.expenseService.getAll()
+            .then((res) => this.searchResult = res as Expense[])
     }
 
 }

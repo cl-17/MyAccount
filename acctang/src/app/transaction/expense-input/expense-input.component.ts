@@ -18,7 +18,7 @@ export class ExpenseInputComponent {
     classifications: Classification[];
     purposes: Purpose[];
 
-    @Input() input_data: Expense = new Expense();
+    @Input() input_data: Expense;
 
     @Output() onAddEvent = new EventEmitter<Expense>();
     @Output() onUpdateEvent = new EventEmitter<Expense>();
@@ -43,15 +43,15 @@ export class ExpenseInputComponent {
             });
     }
 
-    onClickUpdate(expense: Expense): void {
-        this.expenseService.update(expense)
+    onClickUpdate(): void {
+        this.expenseService.update(this.input_data)
             .then(res => {
                 this.onUpdateEvent.emit(res);
             });
     }
 
-    onClickDelete(expense: Expense): void {
-        this.expenseService.delete(expense)
+    onClickDelete(): void {
+        this.expenseService.delete(this.input_data)
             .then(() => {
                 this.onDeleteEvent.emit();
             });

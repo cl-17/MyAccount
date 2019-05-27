@@ -1,11 +1,10 @@
 <ul class="expenses">
-    <li *ngFor="let expense of expenses" [class.selected]="expense === selected" (click)="onSelect(expense)"> 
+    <li *ngFor="let expense of expenses" (click)="onSelect(expense)" [class.selected]="expense === selected"> 
         <span class="badge">{{expense.date}}</span> {{expense.ammount}}
-        <ng-container *ngIf="selected">
-            <h2>Details</h2>
-            <expense-input (event)="onAddEvent($event)" 
-                (event)="onUpdateEvent($event)" 
-                (event)="onDeleteEvent($event)"></expense-input>
-        </ng-container>
+        <expense-input *ngIf="expense === selected" 
+            [input_data]="expense" 
+            (event)="onAddEvent($event)" 
+            (event)="onUpdateEvent($event)" 
+            (event)="onDeleteEvent($event)"></expense-input>
     </li>
 </ul>

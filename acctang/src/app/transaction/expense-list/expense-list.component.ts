@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 import { Expense } from '../../shared/models/expense.model';
 
@@ -9,8 +9,9 @@ import { Expense } from '../../shared/models/expense.model';
 })
 export class ExpenseListComponent {
 
-    expenses: Expense[];
     selected: Expense;
+    
+    @Input() expenses: Expense[];
     
     constructor(
     ){}

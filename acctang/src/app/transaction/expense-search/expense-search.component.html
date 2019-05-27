@@ -1,2 +1,9 @@
 <h1>{{ title | uppercase }}</h1>
 
+<input type="button" 
+    value="検索"
+    (click)="onClickSearch()">
+
+<expense-list [expenses]="searchResult"></expense-list>
+
+
