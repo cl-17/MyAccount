@@ -19,7 +19,14 @@ export class ExpenseService {
         const url = `${this.url_expense}get-all/`;
         return this.http.get(url, {headers: this.headers})
             .toPromise()
-            .then((res) => res as Expense[])
+            .then((res) => {
+                res as Expense[]
+                res.forEach(element => {
+                    element.classification_id = element.purpose.classification.id
+                    element.sub_id = element.purpose.sub_id;
+                })
+                return res;
+                })
             .catch(this.errorHandler);
     }
 

@@ -2,7 +2,7 @@
     <li *ngFor="let expense of expenses" (click)="onSelect(expense)" [class.selected]="expense === selected"> 
         <span class="badge">{{expense.date}}</span> {{expense.ammount}}
         <expense-input *ngIf="expense === selected" 
-            [input_data]="expense" 
+            [input_data]="selected" 
             (event)="onAddEvent($event)" 
             (event)="onUpdateEvent($event)" 
             (event)="onDeleteEvent($event)"></expense-input>
