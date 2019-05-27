@@ -33,6 +33,8 @@ export class ExpenseInputComponent {
     ngOnInit(): void {
         this.classificationService.getAll()
             .then(res => this.classifications = res);
+        this.purposeService.getAllSub(this.input_data.classification_id)
+            .then(res => this.purposes = res);
     }
 
     onClickAdd(): void {
