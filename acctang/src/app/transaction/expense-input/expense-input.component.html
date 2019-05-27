@@ -2,11 +2,15 @@
     <p>日付：
         <input [(ngModel)]="input_data.date"
             type="date"
+            class="input_date"
+            name="input_expense_date"
             #inputExpenseInfo="ngModel"
             required>
     </p>
     <p>分類：
         <select [(ngModel)]="input_data.classification_id"
+                class="input_select"    
+                name="input_expense_classification_id"
                 #inputExpenseInfo="ngModel"
                 required
                 (change)="onChange(input_data.classification_id)">
@@ -18,6 +22,8 @@
     </p>
     <p>用途：
         <select [(ngModel)]="input_data.sub_id"
+            class="input_select"
+            name="input_expense_sub_id"
             #inputExpenseInfo="ngModel"
             required>
             <option *ngFor="let purpose of purposes"
@@ -29,6 +35,8 @@
     <p>金額：
         <input [(ngModel)]="input_data.ammount"
             type="number"
+            class="input_number"
+            name="input_expense_ammount"
             placeholder="ammount"
             #inputExpenseInfo="ngModel"
             required>
@@ -36,6 +44,8 @@
     <p>クレジット：
         <input [(ngModel)]="input_data.credit"
             type="checkbox"
+            class="input_checkbox"
+            name="input_expense_credit"
             [checked]="input_data.credit">
     </p>
 
