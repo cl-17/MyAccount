@@ -20,9 +20,9 @@ export class ExpenseInputComponent {
 
     @Input() input_data: Expense = new Expense();
 
-    @Output() addEvent = new EventEmitter<Expense>();
-    @Output() updateEvent = new EventEmitter<Expense>();
-    @Output() deleteEvent = new EventEmitter<Expense>();
+    @Output() onAddEvent = new EventEmitter<Expense>();
+    @Output() onUpdateEvent = new EventEmitter<Expense>();
+    @Output() onDeleteEvent = new EventEmitter<void>();
 
     constructor(
         private expenseService: ExpenseService,
@@ -38,22 +38,22 @@ export class ExpenseInputComponent {
     onClickAdd(): void {
         this.expenseService.create(this.input_data)
             .then(res => {
-                this.addEvent.emit(res);
+                this.onAddEvent.emit(res);
                 this.input_data = new Expense();
-            });
-    }
-
-    onClickDelete(expense: Expense): void {
-        this.expenseService.delete(expense)
-            .then(() => {
-                this.deleteEvent.emit(expense);
             });
     }
 
     onClickUpdate(expense: Expense): void {
         this.expenseService.update(expense)
             .then(res => {
-                this.updateEvent.emit(res);
+                this.onUpdateEvent.emit(res);
+            });
+    }
+
+    onClickDelete(expense: Expense): void {
+        this.expenseService.delete(expense)
+            .then(() => {
+                this.onDeleteEvent.emit();
             });
     }
 
