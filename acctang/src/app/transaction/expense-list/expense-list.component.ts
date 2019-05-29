@@ -1,11 +1,6 @@
 import { Component, Input } from '@angular/core';
 
-import { ExpenseService } from '../../shared/services/expense.service';
 import { Expense } from '../../shared/models/expense.model';
-import { ClassificationService } from '../../shared/services/classification.service';
-import { Classification } from '../../shared/models/classification.model';
-import { PurposeService } from '../../shared/services/purpose.service';
-import { Purpose } from '../../shared/models/purpose.model';
 
 @Component({
     selector: 'expense-list',
@@ -14,70 +9,33 @@ import { Purpose } from '../../shared/models/purpose.model';
 })
 export class ExpenseListComponent {
 
-    title: string = '＜支出一覧＞';
-    classifications: Classification[];
-    purposes: Purpose[];
-    purposes_update: Purpose[];
-    expenses: Expense[];
     selected: Expense;
+    enableAdd: Boolean;
     
-    @Input() added: Expense = new Expense();
-
+    @Input() expenses: Expense[];
+    
     constructor(
-        private expenseService: ExpenseService,
-        private classificationService: ClassificationService,
-        private purposeService: PurposeService,
-    ){}
+    ){
+        this.enableAdd = false;
+    }
     
     ngOnInit(): void {
-        this.expenseService.getAll()
-            .then(res => this.expenses = res);
-        this.classificationService.getAll()
-            .then(res => this.classifications = res);
     }
 
     onSelect(expense: Expense): void {
         this.selected = expense;
-        this.selected.classification_id = this.selected.purpose.classification.id
-        this.selected.sub_id = this.selected.purpose.sub_id
-        this.onChange_update(this.selected.classification_id);
     }
 
-    onAdd(): void {
-        this.expenseService.create(this.added)
-            .then(res => {
-                this.expenses.push(res);
-                this.onSelect(res);
-                this.added = new Expense();
-            });
+    onUpdateEvent(expense: Expense): void {
+        let index = this.expenses.indexOf(this.selected);
+        this.expenses[index] = expense;
+        this.onSelect(expense);
     }
 
-    onDelete(expense: Expense): void {
-        let index = this.expenses.indexOf(expense);
-        this.expenseService.delete(expense)
-            .then(() => {
-                this.expenses.splice(index, 1);
-                this.selected = null;
-            });
-    }
-
-    onUpdate(expense: Expense): void {
-        let index = this.expenses.indexOf(expense);
-        this.expenseService.update(expense)
-            .then(res => {
-                this.expenses[index] = res;
-                this.onSelect(res);
-            });
-    }
-
-    onChange(c_id: string): void {
-        this.purposeService.getAllSub(c_id)
-            .then(res => this.purposes = res);
-    }
-
-    onChange_update(c_id: string): void {
-        this.purposeService.getAllSub(c_id)
-            .then(res => this.purposes_update = res);
+    onDeleteEvent(): void {
+        let index = this.expenses.indexOf(this.selected);
+        this.expenses.splice(index, 1);
+        this.selected = null;
     }
 
 }

@@ -1,0 +1,7 @@
+<h1>{{ title | uppercase }}</h1>
+
+<expense-input [enableAdd]="enableAdd"
+    (onAddEvent)="onAddEvent($event)"></expense-input>
+
+<expense-list [expenses]="addData"></expense-list>
+

@@ -1,0 +1,17 @@
+<h1>{{ title | uppercase }}</h1>
+
+<br>
+
+<input type="file" (change)="onChangeFile($event)">
+<button (click)="onInputCSV()">取込！</button>
+
+<p>※注意事項</p>
+<p>　・日付は「YYYY-MM-DD」形式としてください。</p>
+<p>　・用途名の重複は正しく登録されません。</p>
+
+<p>以下、読込内容</p>
+<p>※取込内容が正しければ、取込ボタンをおしてください。</p>
+
+<p>{{readText}}</p>
+
+<p>ここまで、読込内容</p>

@@ -1,17 +1,72 @@
-<h1>{{ title | uppercase }}</h1>
+<form #expenseCheck="ngForm" class="inputCheck">
+    <p>日付：
+        <input [(ngModel)]="input_data.date"
+            type="date"
+            class="input_date"
+            name="input_expense_date"
+            #inputExpenseInfo="ngModel"
+            required>
+    </p>
+    <p>分類：
+        <select [(ngModel)]="input_data.classification_id"
+                class="input_select"    
+                name="input_expense_classification_id"
+                #inputExpenseInfo="ngModel"
+                required
+                (change)="onChange(input_data.classification_id)">
+            <option *ngFor="let classification of classifications"
+                [ngValue]="classification.id">
+                {{classification.name}}
+            </option>   
+        </select>
+    </p>
+    <p>用途：
+        <select [(ngModel)]="input_data.sub_id"
+            class="input_select"
+            name="input_expense_sub_id"
+            #inputExpenseInfo="ngModel"
+            required>
+            <option *ngFor="let purpose of purposes"
+                [ngValue]="purpose.sub_id">
+                {{purpose.name}}
+            </option>
+        </select>
+    </p>
+    <p>金額：
+        <input [(ngModel)]="input_data.ammount"
+            type="number"
+            class="input_number"
+            name="input_expense_ammount"
+            placeholder="ammount"
+            #inputExpenseInfo="ngModel"
+            required
+            pattern="^[1-9]\d*$">
+    </p>
+    <p>クレジット：
+        <input [(ngModel)]="input_data.credit"
+            type="checkbox"
+            class="input_checkbox"
+            name="input_expense_credit"
+            [checked]="input_data.credit">
+    </p>
 
-<br>
+    <ng-container *ngIf="enableAdd; then addMode; else updateMode"></ng-container>
+    <ng-template #addMode>
+            <input type="button" 
+            value="登録"
+            (click)="onClickAdd()" 
+            [disabled]="expenseCheck.invalid">
+    </ng-template>
+    <ng-template #updateMode>
+        <input type="button" 
+            value="更新"
+            (click)="onClickUpdate()" 
+            [disabled]="expenseCheck.invalid">
+        <input type="button" 
+            value="削除"
+            (click)="onClickDelete()" 
+            [disabled]="expenseCheck.invalid">
+    </ng-template>
 
-<input type="file" (change)="onChangeFile($event)">
-<button (click)="onInputCSV()">取込！</button>
+</form>
 
-<p>※注意事項</p>
-<p>　・日付は「YYYY-MM-DD」形式としてください。</p>
-<p>　・用途名の重複は正しく登録されません。</p>
-
-<p>以下、読込内容</p>
-<p>※取込内容が正しければ、取込ボタンをおしてください。</p>
-
-<p>{{readText}}</p>
-
-<p>ここまで、読込内容</p>

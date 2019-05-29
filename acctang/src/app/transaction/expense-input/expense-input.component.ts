@@ -1,7 +1,12 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 import { ExpenseService } from '../../shared/services/expense.service';
-import { InputExpense } from '../../shared/models/expense.model';
+import { Expense } from '../../shared/models/expense.model';
+import { ClassificationService } from '../../shared/services/classification.service';
+import { Classification } from '../../shared/models/classification.model';
+import { PurposeService } from '../../shared/services/purpose.service';
+import { Purpose } from '../../shared/models/purpose.model';
+
 
 @Component({
     selector: 'expense-input',
@@ -10,42 +15,59 @@ import { InputExpense } from '../../shared/models/expense.model';
 })
 export class ExpenseInputComponent {
 
-    title: string = '＜支出取込＞';
-    readText: string;
+    classifications: Classification[];
+    purposes: Purpose[];
+
+    @Input() input_data: Expense;
+    @Input() enableAdd: Boolean;
+
+    @Output() onAddEvent = new EventEmitter<Expense>();
+    @Output() onUpdateEvent = new EventEmitter<Expense>();
+    @Output() onDeleteEvent = new EventEmitter<void>();
 
     constructor(
         private expenseService: ExpenseService,
-    ){}
-
+        private classificationService: ClassificationService,
+        private purposeService: PurposeService,
+    ){
+        this.input_data = new Expense();
+    }
+    
     ngOnInit(): void {
+        this.classificationService.getAll()
+            .then(res => this.classifications = res);
+        if (this.input_data.classification_id != null) {
+            this.purposeService.getAllSub(this.input_data.classification_id)
+            .then(res => this.purposes = res);
+        }
     }
 
-    onChangeFile(evt) {
-        let file = evt.target.files[0];
-        const reader = new FileReader();
-        reader.readAsText(file, 'SJIS');
-        reader.addEventListener('load', () => {
-            this.readText = reader.result.toString();
-        });
+    onClickAdd(): void {
+        this.expenseService.create(this.input_data)
+            .then(res => {
+                this.onAddEvent.emit(res);
+                this.input_data = new Expense();
+            });
     }
 
-    onInputCSV() {
-        let csvData:InputExpense[] = [];
-        let temp = this.readText.split('\r\n');
-        temp.forEach((element,index) => {
-            let inputData = element.split(',', 5);
-            let rowData = new InputExpense;
-            rowData.date = inputData[0];
-            rowData.c_name = inputData[1];
-            rowData.p_name = inputData[2];
-            rowData.ammount = inputData[3];
-            rowData.credit = inputData[4];
-            if (rowData.date != '') {
-                csvData[index] = rowData
-            }
-        });
-        this.expenseService.inputCSV(csvData);
-        this.readText = '';
+    onClickUpdate(): void {
+        this.expenseService.update(this.input_data)
+            .then(res => {
+                this.onUpdateEvent.emit(res);
+            });
+    }
+
+    onClickDelete(): void {
+        this.expenseService.delete(this.input_data)
+            .then(() => {
+                this.onDeleteEvent.emit();
+            });
+    }
+
+    onChange(c_id: string): void {
+        this.purposeService.getAllSub(c_id)
+            .then(res => this.purposes = res);
+        this.input_data.sub_id = null;
     }
 
 }
