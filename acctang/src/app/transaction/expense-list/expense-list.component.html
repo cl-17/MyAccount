@@ -4,8 +4,7 @@
         <expense-input *ngIf="expense === selected" 
             [input_data]="selected" 
             [enableAdd]="enableAdd" 
-            (event)="onAddEvent($event)" 
-            (event)="onUpdateEvent($event)" 
-            (event)="onDeleteEvent($event)"></expense-input>
+            (onUpdateEvent)="onUpdateEvent($event)" 
+            (onDeleteEvent)="onDeleteEvent($event)"></expense-input>
     </li>
 </ul>

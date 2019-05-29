@@ -26,11 +26,6 @@ export class ExpenseListComponent {
         this.selected = expense;
     }
 
-    onAddEvent(expense: Expense): void {
-        this.expenses.push(expense);
-        this.onSelect(expense);
-    }
-
     onUpdateEvent(expense: Expense): void {
         let index = this.expenses.indexOf(this.selected);
         this.expenses[index] = expense;
