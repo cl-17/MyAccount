@@ -7,6 +7,7 @@ import { MasterMainComponent } from './master/master-main/master-main.component'
 import { ClassificationListComponent } from './master/classification-list/classification-list.component';
 import { PurposeListComponent } from './master/purpose-list/purpose-list.component';
 import { TransactionMainComponent } from './transaction/transaction-main/transaction-main.component';
+import { ExpenseRegisterComponent } from './transaction/expense-register/expense-register.component';
 import { ExpenseSearchComponent } from './transaction/expense-search/expense-search.component';
 import { ExpenseInputCsvComponent } from './transaction/expense-input-csv/expense-input-csv.component';
 import { ExpenseAnalysisComponent } from './transaction/expense-analysis/expense-analysis.component';
@@ -21,6 +22,7 @@ const routes: Routes = [
   },
   { path: 'angular/transaction', component: TransactionMainComponent,
     children: [
+      { path: 'expense-register', component: ExpenseRegisterComponent },
       { path: 'expense-search', component: ExpenseSearchComponent },
       { path: 'expense-input-csv', component: ExpenseInputCsvComponent },
       { path: 'expense-analysis', component: ExpenseAnalysisComponent },

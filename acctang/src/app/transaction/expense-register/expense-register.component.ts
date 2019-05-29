@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 import { ExpenseService } from '../../shared/services/expense.service';
-
+import { Expense } from '../../shared/models/expense.model';
 
 @Component({
     selector: 'expense-register',
@@ -11,10 +11,13 @@ import { ExpenseService } from '../../shared/services/expense.service';
 export class ExpenseRegisterComponent {
 
     title: string = '＜支出登録＞';
+    enableAdd: Boolean;
+    addData: Expense[];
 
     constructor(
         private expenseService: ExpenseService,
     ){
+        this.enableAdd = true;
     }
     
     ngOnInit(): void {

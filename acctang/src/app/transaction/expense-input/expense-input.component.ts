@@ -29,13 +29,17 @@ export class ExpenseInputComponent {
         private expenseService: ExpenseService,
         private classificationService: ClassificationService,
         private purposeService: PurposeService,
-    ){}
+    ){
+        this.input_data = new Expense();
+    }
     
     ngOnInit(): void {
         this.classificationService.getAll()
             .then(res => this.classifications = res);
-        this.purposeService.getAllSub(this.input_data.classification_id)
+        if (this.input_data.classification_id != null) {
+            this.purposeService.getAllSub(this.input_data.classification_id)
             .then(res => this.purposes = res);
+        }
     }
 
     onClickAdd(): void {
