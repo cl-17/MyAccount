@@ -39,7 +39,8 @@
             name="input_expense_ammount"
             placeholder="ammount"
             #inputExpenseInfo="ngModel"
-            required>
+            required
+            pattern="^[1-9]\d*$">
     </p>
     <p>クレジット：
         <input [(ngModel)]="input_data.credit"
