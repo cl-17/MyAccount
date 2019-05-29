@@ -19,6 +19,7 @@ export class ExpenseInputComponent {
     purposes: Purpose[];
 
     @Input() input_data: Expense;
+    @Input() enableAdd: Boolean;
 
     @Output() onAddEvent = new EventEmitter<Expense>();
     @Output() onUpdateEvent = new EventEmitter<Expense>();

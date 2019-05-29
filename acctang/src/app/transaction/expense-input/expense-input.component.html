@@ -49,18 +49,23 @@
             [checked]="input_data.credit">
     </p>
 
-    <input type="button" 
-        value="登録"
-        (click)="onClickAdd()" 
-        [disabled]="expenseCheck.invalid">
-    <input type="button" 
-        value="更新"
-        (click)="onClickUpdate()" 
-        [disabled]="expenseCheck.invalid">
-    <input type="button" 
-        value="削除"
-        (click)="onClickDelete()" 
-        [disabled]="expenseCheck.invalid">
+    <ng-container *ngIf="enableAdd; then addMode; else updateMode"></ng-container>
+    <ng-template #addMode>
+            <input type="button" 
+            value="登録"
+            (click)="onClickAdd()" 
+            [disabled]="expenseCheck.invalid">
+    </ng-template>
+    <ng-template #updateMode>
+        <input type="button" 
+            value="更新"
+            (click)="onClickUpdate()" 
+            [disabled]="expenseCheck.invalid">
+        <input type="button" 
+            value="削除"
+            (click)="onClickDelete()" 
+            [disabled]="expenseCheck.invalid">
+    </ng-template>
 
 </form>
 

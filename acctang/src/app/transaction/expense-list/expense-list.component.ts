@@ -10,11 +10,14 @@ import { Expense } from '../../shared/models/expense.model';
 export class ExpenseListComponent {
 
     selected: Expense;
+    enableAdd: Boolean;
     
     @Input() expenses: Expense[];
     
     constructor(
-    ){}
+    ){
+        this.enableAdd = false;
+    }
     
     ngOnInit(): void {
     }
