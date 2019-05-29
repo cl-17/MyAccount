@@ -48,12 +48,18 @@ export class ExpenseService {
     }
 
     public create(added: Expense): Promise<Expense> {
+        let result: Expense;
         return this.getNewPK()
             .then((res) => {
                 added.id = res
                 return this.http.post(this.url_expense, added, {headers: this.headers})
                     .toPromise()
-                    .then((res) => res as Expense)
+                    .then((res) => {
+                        result = res as Expense
+                        result.classification_id = result.purpose.classification.id
+                        result.sub_id = result.purpose.sub_id
+                        return result
+                    })
                     .catch(this.errorHandler);
             })
             .catch(this.errorHandler);
@@ -69,11 +75,17 @@ export class ExpenseService {
 
     public update(updated: Expense): Promise<Expense> {
         const url = `${this.url_expense}${updated.id}/`;
+        let result: Expense;
         // セッション管理するようになったら、ちゃんと取得すること
         updated.update_user_id = 2
         return this.http.put(url, updated, {headers: this.headers})
             .toPromise()
-            .then((res) => res as Expense)
+            .then((res) => {
+                result = res as Expense
+                result.classification_id = result.purpose.classification.id
+                result.sub_id = result.purpose.sub_id
+                return result
+            })
             .catch(this.errorHandler);
     }
 
